@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.edge-qa-profile/
+.tools/
+*.tsbuildinfo
+*-qa.png
+showcase-*.png
+public/robot/
+public/humanoid/meshes/
