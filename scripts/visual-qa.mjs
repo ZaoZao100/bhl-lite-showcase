@@ -4,6 +4,7 @@ const browser = await chromium.launch({
   headless: true,
   executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
 })
+const baseUrl = process.env.QA_BASE_URL ?? 'http://127.0.0.1:5173/'
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
 const errors = []
 const measureFps = (duration = 900) => page.evaluate((sampleDuration) => new Promise((resolve) => {
@@ -24,7 +25,7 @@ page.on('console', (message) => {
 })
 page.on('pageerror', (error) => errors.push(error.message))
 
-await page.goto('http://127.0.0.1:5173/', { waitUntil: 'networkidle' })
+await page.goto(baseUrl, { waitUntil: 'networkidle' })
 await page.waitForTimeout(5000)
 const canvasBox = await page.locator('canvas').boundingBox()
 if (canvasBox) {

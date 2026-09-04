@@ -15,6 +15,10 @@ desktop.on('console', (message) => {
 desktop.on('pageerror', (error) => errors.push(error.message))
 await desktop.goto(baseUrl, { waitUntil: 'domcontentloaded', timeout: 45_000 })
 await desktop.waitForTimeout(1200)
+await desktop.waitForFunction(() => {
+  const viewer = document.querySelector('.viewer')
+  return Boolean(viewer?.dataset.modelWidth && viewer?.dataset.modelDepth && viewer?.dataset.modelHeight)
+}, { timeout: 15_000 })
 await desktop.locator('#details').scrollIntoViewIfNeeded()
 await desktop.waitForTimeout(1300)
 await desktop.locator('#details').screenshot({ path: 'engineering-section-qa.png' })
