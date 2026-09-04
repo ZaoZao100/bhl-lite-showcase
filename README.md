@@ -1,6 +1,6 @@
-# Berkeley Humanoid Lite — Interactive Showcase
+# 3S Humanoid Service System
 
-Interactive web presentation for the Berkeley Humanoid Lite platform, including a URDF-driven 3D model, motion presets, exploded-view animation, engineering renders, simulation highlights, and real manufacturing photography.
+Interactive web presentation for a 3S humanoid service robot system, including a URDF-driven 3D model, motion presets, exploded-view animation, actuator model comparison, simulation highlights, and real manufacturing photography.
 
 ## Local development
 

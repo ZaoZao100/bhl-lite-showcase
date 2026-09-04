@@ -1071,7 +1071,7 @@ function Viewer({
     }
   }, [apiRef, setLoaded])
 
-  return <div className="viewer" ref={hostRef} aria-label="Berkeley Humanoid Lite Arm 交互式三维模型" />
+  return <div className="viewer" ref={hostRef} aria-label="3S 人形服务机器人交互式三维模型" />
 }
 
 function App() {
@@ -1148,9 +1148,9 @@ function App() {
         <a href="#real-builds" data-code="07"><i />BUILD</a>
       </nav>
       <header className="nav">
-        <a className="brand" href="#" aria-label="BHL Arm 首页">
+        <a className="brand" href="#" aria-label="3S Robot 首页">
           <span className="brand-mark"><i /><i /></span>
-          <span>BHL <b>LITE</b></span>
+          <span>3S <b>ROBOT</b></span>
         </a>
         <div className="nav-status"><span /> IOT 3S DEMO <i>／ 01</i></div>
         <nav>
@@ -1162,15 +1162,15 @@ function App() {
       </header>
 
       <div className="data-marquee" aria-hidden="true">
-        <div>22 DOF SYSTEM &nbsp;◆&nbsp; IOT SMART SERVICE &nbsp;◆&nbsp; REAL-TIME KINEMATICS &nbsp;◆&nbsp; 5010 / 6512 MODULAR ACTUATION &nbsp;◆&nbsp; BERKELEY HUMANOID LITE &nbsp;◆&nbsp; DIGITAL TWIN &nbsp;◆&nbsp; SIM-TO-REAL PIPELINE</div>
+        <div>22 DOF SERVICE ROBOT &nbsp;◆&nbsp; IOT SMART SERVICE &nbsp;◆&nbsp; REAL-TIME KINEMATICS &nbsp;◆&nbsp; 5010 / 6512 MODULAR ACTUATION &nbsp;◆&nbsp; DIGITAL TWIN &nbsp;◆&nbsp; SIM-TO-REAL PIPELINE &nbsp;◆&nbsp; 3S DEMO SYSTEM</div>
       </div>
 
       <section className="hero">
-        <div className="side-index" aria-hidden="true"><b>01</b><span>BHL DIGITAL<br />TWIN INTERFACE</span><i /></div>
+        <div className="side-index" aria-hidden="true"><b>01</b><span>3S SERVICE<br />DIGITAL TWIN</span><i /></div>
         <div className="copy">
-          <div className="eyebrow"><span /> BERKELEY HUMANOID LITE · IOT 3S DEMO</div>
+          <div className="eyebrow"><span /> IOT SMART SERVICE SYSTEM · 3S DEMO</div>
           <h1>SMART<br />SERVICE<br /><em>HUMANOID.</em></h1>
-          <p>把开源人形机器人、数字孪生与远程服务链路<br />组合成可运行的物联网智慧服务系统。</p>
+          <p>把人形机器人、数字孪生与远程服务链路<br />组合成可运行的物联网智慧服务系统。</p>
           <div className="actions">
             <button
               className="primary"
@@ -1205,7 +1205,7 @@ function App() {
             <span className="hud-axis hud-axis-z">Z</span>
           </div>
           <div className="telemetry telemetry-top">
-            <span>SYS / BHL-22</span>
+            <span>SYS / 3S-22</span>
             <b>{exploded ? 'ENERGY FIELD ACTIVE' : 'DIGITAL TWIN ONLINE'}</b>
           </div>
           <div className="telemetry telemetry-bottom">
@@ -1265,23 +1265,23 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>URDF VERIFIED</span><i /><b>DIGITAL ASSET / ONLINE</b></div>
         <div className="details-intro evidence-head">
           <div className="details-heading">
-            <div className="eyebrow"><span /> PLATFORM OVERVIEW · 02</div>
-            <h2>一台能被复现的<br />开源人形机器人。</h2>
-            <p>页面只保留能被官方文档、论文和源码支撑的核心信息：成本目标、自由度、3D 打印执行器、模型资产和仿真到真机的控制链路。</p>
+            <div className="eyebrow"><span /> SYSTEM OVERVIEW · 02</div>
+            <h2>一套可运行的<br />3S 人形服务系统。</h2>
+            <p>不再堆资料，直接呈现比赛要看的东西：问题、方案、关键技术、机器人动作演示、关节模块、实物制造和服务场景闭环。</p>
           </div>
           <aside className="overview-manifest" aria-label="数字模型清单">
-            <div className="manifest-head"><span>EVIDENCE STACK</span><b>DOCS + CODE + PHOTOS</b></div>
-            <div><i>01</i><span><small>OPEN PLATFORM</small><b>SUB-$5K TARGET</b></span><em>DOC</em></div>
+            <div className="manifest-head"><span>3S EVIDENCE STACK</span><b>MODEL + PHOTO + SERVICE</b></div>
+            <div><i>01</i><span><small>SMART SERVICE</small><b>IOT SERVICE LOOP</b></span><em>3S</em></div>
             <div><i>02</i><span><small>KINEMATICS</small><b>10 ARM + 12 LEG JOINTS</b></span><em>URDF</em></div>
-            <div><i>03</i><span><small>SIM CHAIN</small><b>ISAAC LAB → ONNX → ROBOT</b></span><em>CODE</em></div>
+            <div><i>03</i><span><small>SIM CHAIN</small><b>TRAIN → VERIFY → DEPLOY</b></span><em>RUN</em></div>
           </aside>
         </div>
 
         <div className="metric-grid proof-grid" aria-label="项目关键数据">
           <article>
-            <small>ACCESSIBLE HUMANOID</small>
-            <strong><i>&lt;</i>$5K</strong>
-            <p>官方论文与文档把低成本、可定制和开源作为平台目标。</p>
+            <small>SYSTEM TARGET</small>
+            <strong>3S</strong>
+            <p>围绕智慧服务系统组织展示，不只是单个机器人模型。</p>
           </article>
           <article>
             <small>FULL-BODY CHAIN</small>
@@ -1304,7 +1304,7 @@ function App() {
           <figure className="dimension-plate">
             <div className="plate-corner plate-corner-a" /><div className="plate-corner plate-corner-b" />
             <div className="render-ident"><i /> ACTUAL URDF / STL RENDER</div>
-            <img src={assetUrl('/renders/bhl-engineering-hero.png')} alt="由项目 URDF 和 STL 资产渲染的 Berkeley Humanoid Lite 整机模型" loading="lazy" />
+            <img src={assetUrl('/renders/bhl-engineering-hero.png')} alt="由项目 URDF 和 STL 资产渲染的整机模型" loading="lazy" />
             <div className="measure measure-width"><i /><span>761.5 MM<small>IDLE-POSE WIDTH</small></span><i /></div>
             <div className="measure measure-height"><i /><span>794.2 MM<small>MESH HEIGHT</small></span><i /></div>
             <div className="measure measure-depth"><span>338.6 MM · DEPTH ENVELOPE</span></div>
@@ -1317,26 +1317,26 @@ function App() {
 
           <div className="engineering-subgrid">
             <figure className="joint-plate">
-              <img src={assetUrl('/renders/bhl-engineering-side.png')} alt="Berkeley Humanoid Lite 侧面关节结构渲染" loading="lazy" />
+              <img src={assetUrl('/renders/bhl-engineering-side.png')} alt="服务机器人侧面关节结构渲染" loading="lazy" />
               <div className="joint-pin pin-shoulder"><i /><span>SHOULDER<br /><b>3-AXIS CHAIN</b></span></div>
               <div className="joint-pin pin-hip"><i /><span>HIP<br /><b>YAW · ROLL · PITCH</b></span></div>
               <div className="joint-pin pin-knee"><i /><span>KNEE<br /><b>PITCH JOINT</b></span></div>
               <figcaption><span>02 / KINEMATIC PROFILE</span><b>22 个 REVOLUTE JOINTS</b></figcaption>
             </figure>
             <figure className="explode-plate">
-              <img src={assetUrl('/renders/bhl-engineering-exploded.png')} alt="Berkeley Humanoid Lite 实际网格资产分解渲染" loading="lazy" />
+              <img src={assetUrl('/renders/bhl-engineering-exploded.png')} alt="服务机器人实际网格资产分解渲染" loading="lazy" />
               <div className="mesh-counter"><small>RENDER ASSET SET</small><strong>26</strong><span>STL MESHES</span></div>
-              <div className="cad-origin"><i /> ONSHAPE DOCUMENT<br /><b>fc6443b1d89d...</b></div>
+              <div className="cad-origin"><i /> CAD MODEL<br /><b>PARAMETRIC ASSEMBLY</b></div>
               <figcaption><span>03 / ASSET TOPOLOGY</span><b>URDF 关联的实际零件集合</b></figcaption>
             </figure>
           </div>
         </div>
 
         <div className="source-proof-strip">
-          <span>OFFICIAL PAPER</span>
-          <span>GITBOOK BUILD DOCS</span>
-          <span>GITHUB SOURCE TREE</span>
-          <span>USER-PROVIDED REAL PHOTOS</span>
+          <span>PROBLEM BACKGROUND</span>
+          <span>TECHNICAL SOLUTION</span>
+          <span>KEY TECHNOLOGY</span>
+          <span>SCENARIO VALUE</span>
         </div>
       </section>
 
@@ -1347,13 +1347,13 @@ function App() {
             <div className="eyebrow"><span /> ACTUATOR CAD FAMILY · 03</div>
             <h2>先看两种关节，<br /><em>再看整机落地。</em></h2>
           </div>
-          <p>官方 releases 同时列出 Actuator-5010 与 Actuator-6512 的 Onshape CAD 和 3D 打印项目。两者共享摆线减速、打印壳体、输出轴与电机外壳这套模块化思路，但尺寸定位和制造文件不同。</p>
+          <p>项目资料包含 Actuator-5010 与 Actuator-6512 两种 CAD / 3D 打印关节。两者共享摆线减速、打印壳体、输出轴与电机外壳这套模块化思路，但尺寸定位和制造文件不同。</p>
         </div>
 
         <div className="joint-family-layout" aria-label="5010 与 6512 关节模型特点">
           <article className="joint-family-card joint-family-5010">
             <div className="joint-family-visual">
-              <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 Onshape 摆线关节模型" loading="eager" decoding="async" />
+              <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 摆线关节 CAD 模型" loading="eager" decoding="async" />
               <span>COMPACT / 5010</span>
             </div>
             <div className="joint-family-copy">
@@ -1370,7 +1370,7 @@ function App() {
 
           <article className="joint-family-card joint-family-6512">
             <div className="joint-family-visual">
-              <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 Onshape 摆线关节模型" loading="eager" decoding="async" />
+              <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 摆线关节 CAD 模型" loading="eager" decoding="async" />
               <span>LARGER / 6512</span>
             </div>
             <div className="joint-family-copy">
@@ -1389,7 +1389,7 @@ function App() {
         <div className="joint-system-strip" aria-label="两种关节的共同设计特点">
           <div><small>SHARED CORE</small><b>Cycloidal Disk</b><span>摆线盘把电机高速旋转转换成高减速输出。</span></div>
           <div><small>PRINTABLE BODY</small><b>Housing Variants</b><span>壳体按打印机和装配工艺拆分，便于低成本复现。</span></div>
-          <div><small>MODEL TO BUILD</small><b>CAD + MakerWorld</b><span>Releases 同时给出 CAD 与打印项目，形成从模型到制造的闭环。</span></div>
+          <div><small>MODEL TO BUILD</small><b>CAD + PRINT FILES</b><span>CAD 与打印文件配套，形成从模型到制造的闭环。</span></div>
           <div><small>SERVICE NODE</small><b>Actuator as IoT Endpoint</b><span>每个关节都能成为状态采集、远程调试和维护诊断的服务节点。</span></div>
         </div>
       </section>
@@ -1419,7 +1419,7 @@ function App() {
             <figcaption><span>02 / BATCH BUILD</span><b>执行器批量接线与调试</b></figcaption>
           </figure>
           <figure>
-            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 全身实物集成测试照片" loading="lazy" />
+            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="人形服务机器人全身实物集成测试照片" loading="lazy" />
             <figcaption><span>03 / FULL BODY</span><b>从模块走向全身系统集成</b></figcaption>
           </figure>
           <div className="hardware-photo-status"><i /> REAL BUILD / PROVIDED PHOTOS</div>
@@ -1493,7 +1493,7 @@ function App() {
             </article>
             <article>
               <small>KEY TECH + INNOVATION</small>
-              <h3>关键技术是开源关节与数字孪生闭环</h3>
+              <h3>关键技术是模块关节与数字孪生闭环</h3>
               <p>5010 / 6512 模块让硬件按任务尺度组合，服务系统可以从单关节扩展到全身平台。</p>
             </article>
             <article>
@@ -1520,13 +1520,13 @@ function App() {
             <div className="eyebrow"><span /> DIGITAL PIPELINE · 06</div>
             <h2>一次建模，<br />贯穿仿真与真机。</h2>
           </div>
-          <p>源码亮点不需要长代码展示：资产从 Onshape 导出 URDF / MJCF / USD；强化学习在 Isaac Lab 训练；回放脚本导出 ONNX 和部署 YAML；低层控制通过 UDP 与 CAN 把策略送到真实关节。</p>
+          <p>工程亮点不需要长代码展示：CAD 资产导出 URDF / MJCF / USD；强化学习在 Isaac Lab 训练；回放脚本导出 ONNX 和部署配置；低层控制通过 UDP 与 CAN 把策略送到真实关节。</p>
         </div>
 
         <div className="pipeline clean-pipeline" aria-label="机器人数字研发流程">
           <div className="pipeline-track"><i /><i /><i /><i /></div>
           {[
-            ['01', 'DESIGN', 'ONSHAPE', '参数化机械设计'],
+            ['01', 'DESIGN', 'CAD DESIGN', '参数化机械设计'],
             ['02', 'DESCRIBE', 'URDF · MJCF · USD', '统一机器人资产'],
             ['03', 'TRAIN', 'ISAAC LAB', 'GPU 并行强化学习'],
             ['04', 'VALIDATE', 'MUJOCO', 'Sim-to-Sim 验证'],
@@ -1606,7 +1606,7 @@ function App() {
           <p>实物照片按制造路径重排：先看单个关节原型，再看电机入壳、轴承嵌件、驱动板、批量调试，最后进入全身装配。这样比单纯堆图更像一条完整技术报告证据链。</p>
         </div>
 
-        <div className="real-photo-grid real-photo-grid-expanded" aria-label="Berkeley Humanoid Lite 真实制造与装配照片">
+        <div className="real-photo-grid real-photo-grid-expanded" aria-label="3S 人形服务机器人真实制造与装配照片">
           <figure className="real-photo-card real-photo-actuator-close">
             <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="eager" decoding="async" />
             <figcaption><span>01 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
@@ -1632,18 +1632,18 @@ function App() {
             <figcaption><span>06 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-integration">
-            <img src={assetUrl('/photos/system-integration.jpg')} alt="Berkeley Humanoid Lite 整机平铺装配与全身线束集成" loading="eager" decoding="async" />
+            <img src={assetUrl('/photos/system-integration.jpg')} alt="人形服务机器人整机平铺装配与全身线束集成" loading="eager" decoding="async" />
             <figcaption><span>07 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-fullbody">
-            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 整机站立集成实物照片" loading="eager" decoding="async" />
+            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="人形服务机器人整机站立集成实物照片" loading="eager" decoding="async" />
             <figcaption><span>08 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
           </figure>
         </div>
       </section>
 
       <footer>
-        <span>BERKELEY HUMANOID LITE — IOT 3S SHOWCASE</span>
+        <span>3S HUMANOID SERVICE SYSTEM</span>
         <div className="footer-line"><i /></div>
         <span>DESIGN · CONNECT · SERVICE</span>
       </footer>
