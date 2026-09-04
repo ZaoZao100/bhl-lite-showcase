@@ -1492,14 +1492,14 @@ function App() {
               <p>真实关节、低层总线、仿真资产和网页演示合成一条可展示、可调试、可扩展的服务链路。</p>
             </article>
             <article>
-              <small>INNOVATION DESIGN</small>
-              <h3>用开源关节降低系统复现门槛</h3>
+              <small>KEY TECH + INNOVATION</small>
+              <h3>关键技术是开源关节与数字孪生闭环</h3>
               <p>5010 / 6512 模块让硬件按任务尺度组合，服务系统可以从单关节扩展到全身平台。</p>
             </article>
             <article>
-              <small>APPLICATION VALUE</small>
-              <h3>教育、巡检、远程操作与展示交互</h3>
-              <p>面向高校实验、机器人课程、设备维护演示和远程服务验证，突出低成本与产业培训价值。</p>
+              <small>SCENARIOS · MARKET · VALUE</small>
+              <h3>应用场景、市场前景与产业价值</h3>
+              <p>面向高校实验、机器人课程、巡检演示和远程服务验证，突出低成本复现、模块供应链和产业培训价值。</p>
             </article>
           </div>
         </div>
