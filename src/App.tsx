@@ -1139,13 +1139,13 @@ function App() {
       <div className="circuit-field"><i /><i /><i /><i /><i /><i /></div>
       <div className="page-energy-progress" aria-hidden="true"><i /><b /><span>SCROLL ENERGY</span></div>
       <nav className="page-rail" aria-label="页面章节导航">
-        <a href="#" data-code="01"><i />MODEL</a>
-        <a href="#details" data-code="02"><i />PROFILE</a>
-        <a href="#actuators" data-code="03"><i />JOINTS</a>
-        <a href="#hardware" data-code="04"><i />HARDWARE</a>
-        <a href="#service-system" data-code="05"><i />3S</a>
-        <a href="#software" data-code="06"><i />PIPELINE</a>
-        <a href="#real-builds" data-code="07"><i />BUILD</a>
+        <a href="#" data-code="01"><i />TWIN</a>
+        <a href="#details" data-code="02"><i />SYSTEM</a>
+        <a href="#actuators" data-code="03"><i />DEVICE</a>
+        <a href="#hardware" data-code="04"><i />EDGE</a>
+        <a href="#service-system" data-code="05"><i />IOT LOOP</a>
+        <a href="#software" data-code="06"><i />DATA</a>
+        <a href="#real-builds" data-code="07"><i />FIELD</a>
       </nav>
       <header className="nav">
         <a className="brand" href="#" aria-label="3S Robot 首页">
@@ -1154,10 +1154,10 @@ function App() {
         </a>
         <div className="nav-status"><span /> IOT 3S DEMO <i>／ 01</i></div>
         <nav>
-          <a href="#actuators">JOINTS</a>
-          <a href="#hardware">HARDWARE</a>
-          <a href="#service-system">3S SYSTEM</a>
-          <a href="#real-builds">REAL BUILD</a>
+          <a href="#actuators">DEVICE</a>
+          <a href="#hardware">EDGE</a>
+          <a href="#service-system">IOT LOOP</a>
+          <a href="#real-builds">FIELD</a>
         </nav>
       </header>
 
@@ -1168,9 +1168,12 @@ function App() {
       <section className="hero">
         <div className="side-index" aria-hidden="true"><b>01</b><span>3S SERVICE<br />DIGITAL TWIN</span><i /></div>
         <div className="copy">
-          <div className="eyebrow"><span /> IOT SMART SERVICE SYSTEM · 3S DEMO</div>
-          <h1>SMART<br />SERVICE<br /><em>HUMANOID.</em></h1>
-          <p>把人形机器人、数字孪生与远程服务链路<br />组合成可运行的物联网智慧服务系统。</p>
+          <div className="eyebrow"><span /> MOBILE IOT SERVICE TERMINAL · 3S</div>
+          <h1>IOT SERVICE<br /><em>HUMANOID.</em></h1>
+          <p>让机器人从“会动的机器”变成可感知、可联网、<br />可远程控制、可数字化运维的移动物联网终端。</p>
+          <div className="hero-iot-route" aria-label="物联网数据链">
+            <span><i />感知</span><b>→</b><span><i />边缘</span><b>→</b><span><i />互联</span><b>→</b><span><i />服务</span>
+          </div>
           <div className="actions">
             <button
               className="primary"
@@ -1205,12 +1208,12 @@ function App() {
             <span className="hud-axis hud-axis-z">Z</span>
           </div>
           <div className="telemetry telemetry-top">
-            <span>SYS / 3S-22</span>
-            <b>{exploded ? 'ENERGY FIELD ACTIVE' : 'DIGITAL TWIN ONLINE'}</b>
+            <span>EDGE GATEWAY / 3S-22</span>
+            <b>{exploded ? 'DEVICE TOPOLOGY VIEW' : '22 JOINT NODES ONLINE'}</b>
           </div>
           <div className="telemetry telemetry-bottom">
-            <span>SYNC 99.98%</span>
-            <b>{exploded ? 'SHELL LOCKED · R 0.43M' : 'KINEMATIC SOLVER READY'}</b>
+            <span>CAN0 + CAN1 / UDP UPLINK</span>
+            <b>{exploded ? 'SERVICE GRAPH EXPANDED' : 'DIGITAL TWIN SYNCHRONIZED'}</b>
           </div>
           <Viewer
             exploded={exploded}
@@ -1250,9 +1253,9 @@ function App() {
         </div>
 
         <aside className="specs" id="system">
-          <div><strong>22</strong><span>ACTUATED<br />DEGREES OF FREEDOM</span></div>
-          <div><strong>10</strong><span>DUAL-ARM<br />ACTUATED JOINTS</span></div>
-          <div><strong>12</strong><span>BIPEDAL<br />LEG KINEMATICS</span></div>
+          <div><strong>22</strong><span>FIELD DEVICE<br />JOINT NODES</span></div>
+          <div><strong>2</strong><span>EDGE BUS<br />CAN CHANNELS</span></div>
+          <div><strong>25<i>HZ</i></strong><span>ON-DEVICE<br />POLICY RATE</span></div>
         </aside>
 
         <div className="scroll-cue" aria-hidden="true">
@@ -1266,22 +1269,22 @@ function App() {
         <div className="details-intro evidence-head">
           <div className="details-heading">
             <div className="eyebrow"><span /> SYSTEM OVERVIEW · 02</div>
-            <h2>一套可运行的<br />3S 人形服务系统。</h2>
-            <p>不再堆资料，直接呈现比赛要看的东西：问题、方案、关键技术、机器人动作演示、关节模块、实物制造和服务场景闭环。</p>
+            <h2>一台机器人，<br />一套移动物联网系统。</h2>
+            <p>22 个关节负责执行与反馈，板载计算负责实时决策，双 CAN 与 UDP 负责数据互联，数字孪生负责可视化、远程操控和运维诊断。</p>
           </div>
           <aside className="overview-manifest" aria-label="数字模型清单">
             <div className="manifest-head"><span>3S EVIDENCE STACK</span><b>MODEL + PHOTO + SERVICE</b></div>
-            <div><i>01</i><span><small>SMART SERVICE</small><b>IOT SERVICE LOOP</b></span><em>3S</em></div>
-            <div><i>02</i><span><small>KINEMATICS</small><b>10 ARM + 12 LEG JOINTS</b></span><em>URDF</em></div>
-            <div><i>03</i><span><small>SIM CHAIN</small><b>TRAIN → VERIFY → DEPLOY</b></span><em>RUN</em></div>
+            <div><i>01</i><span><small>DEVICE LAYER</small><b>22 JOINTS + IMU + ENCODER</b></span><em>SENSE</em></div>
+            <div><i>02</i><span><small>EDGE + NETWORK</small><b>POLICY + DUAL CAN + UDP</b></span><em>LINK</em></div>
+            <div><i>03</i><span><small>SERVICE LAYER</small><b>TWIN + TELEOP + DIAGNOSIS</b></span><em>SERVE</em></div>
           </aside>
         </div>
 
         <div className="metric-grid proof-grid" aria-label="项目关键数据">
           <article>
-            <small>SYSTEM TARGET</small>
-            <strong>3S</strong>
-            <p>围绕智慧服务系统组织展示，不只是单个机器人模型。</p>
+            <small>CONNECTED DEVICE</small>
+            <strong>22<i>NODES</i></strong>
+            <p>每个关节同时承担动作执行和状态反馈，组成分布式现场设备层。</p>
           </article>
           <article>
             <small>FULL-BODY CHAIN</small>
@@ -1341,13 +1344,13 @@ function App() {
       </section>
 
       <section className="actuator-family-section" id="actuators">
-        <div className="section-energy-label" aria-hidden="true"><span>JOINT FAMILY</span><i /><b>CAD MODELS / 03</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>DEVICE LAYER</span><i /><b>CONNECTED ACTUATORS / 03</b></div>
         <div className="actuator-family-head">
           <div>
-            <div className="eyebrow"><span /> ACTUATOR CAD FAMILY · 03</div>
-            <h2>先看两种关节，<br /><em>再看整机落地。</em></h2>
+            <div className="eyebrow"><span /> IOT DEVICE LAYER · 03</div>
+            <h2>两种智能关节，<br /><em>构成现场设备层。</em></h2>
           </div>
-          <p>项目资料包含 Actuator-5010 与 Actuator-6512 两种 CAD / 3D 打印关节。两者共享摆线减速、打印壳体、输出轴与电机外壳这套模块化思路，但尺寸定位和制造文件不同。</p>
+          <p>5010 与 6512 不只是机械关节。电机负责执行，编码器持续反馈位置，驱动器完成闭环控制，再通过 CAN 接入板载网关；机械模块由此成为可寻址、可诊断的现场节点。</p>
         </div>
 
         <div className="joint-family-layout" aria-label="5010 与 6512 关节模型特点">
@@ -1390,17 +1393,17 @@ function App() {
           <div><small>SHARED CORE</small><b>Cycloidal Disk</b><span>摆线盘把电机高速旋转转换成高减速输出。</span></div>
           <div><small>PRINTABLE BODY</small><b>Housing Variants</b><span>壳体按打印机和装配工艺拆分，便于低成本复现。</span></div>
           <div><small>MODEL TO BUILD</small><b>CAD + PRINT FILES</b><span>CAD 与打印文件配套，形成从模型到制造的闭环。</span></div>
-          <div><small>SERVICE NODE</small><b>Actuator as IoT Endpoint</b><span>每个关节都能成为状态采集、远程调试和维护诊断的服务节点。</span></div>
+          <div><small>IOT ENDPOINT</small><b>Sense · Act · Report</b><span>关节形成“采集状态—执行指令—回传结果”的最小物联网闭环。</span></div>
         </div>
       </section>
 
       <section className="hardware-section photo-led-section" id="hardware">
-        <div className="section-energy-label" aria-hidden="true"><span>ACTUATION CORE</span><i /><b>MECHANICAL LAYER / 04</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>EDGE NODE</span><i /><b>DEVICE NETWORK / 04</b></div>
         <div className="section-index" aria-hidden="true">04</div>
         <div className="section-copy">
-          <div className="eyebrow"><span /> MODULAR HARDWARE · 04</div>
-          <h2>这个项目的核心，<br /><em>其实是关节。</em></h2>
-          <p>模块化 3D 打印齿轮箱把无刷电机、编码器、轴承和壳体收进一个可复制单元。网页展示重点放在实物：能看到材料、线束、铜绕组、螺钉和批量装配痕迹。</p>
+          <div className="eyebrow"><span /> PHYSICAL EDGE NETWORK · 04</div>
+          <h2>硬件不只被装配，<br /><em>还要被连接。</em></h2>
+          <p>无刷电机、编码器、驱动板和摆线减速器组成执行节点；左右肢体经双 CAN 分流接入边缘控制器，让批量关节拥有统一的命令、反馈和故障定位路径。</p>
           <div className="hardware-tags">
             <span>3D PRINTED GEARBOX</span>
             <span>AS5600 ENCODER</span>
@@ -1458,79 +1461,85 @@ function App() {
       </section>
 
       <section className="service-system-section" id="service-system">
-        <div className="section-energy-label" aria-hidden="true"><span>SMART SERVICE</span><i /><b>IOT 3S / 05</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>CLOSED LOOP</span><i /><b>IOT SERVICE / 05</b></div>
         <div className="service-system-head">
           <div>
-            <div className="eyebrow"><span /> IOT SMART SERVICE SYSTEM · 05</div>
-            <h2>比赛重点不是“会动”，<br /><em>而是形成服务系统。</em></h2>
+            <div className="eyebrow"><span /> END · EDGE · NETWORK · SERVICE · 05</div>
+            <h2>数据回得来，<br /><em>服务才真正闭环。</em></h2>
           </div>
-          <p>这个网页按“端、边、网、云、服务”的物联网逻辑重排：机器人关节采集状态，板载控制器执行策略，低延迟网络承载遥操作，数字孪生负责展示、仿真、诊断和技术报告呈现。</p>
+          <p>远端下发任务，边缘控制器拆解动作，关节节点执行并回传状态，数字孪生同步呈现结果。指令、执行、反馈和诊断形成同一条可追踪的数据链。</p>
         </div>
 
         <div className="service-system-layout" aria-label="物联网智慧服务系统架构">
           <div className="service-orbit-map">
+            <div className="service-map-kicker"><i /> LIVE SYSTEM TOPOLOGY <b>DATA FLOW ACTIVE</b></div>
             <div className="service-core">
-              <small>3S</small>
-              <b>Smart Service System</b>
-              <span>可运行创新技术演示系统</span>
+              <small>DIGITAL TWIN</small>
+              <b>3S Service Hub</b>
+              <span>状态可视 · 远程控制 · 运维诊断</span>
             </div>
-            <span className="service-node node-sense"><i />感知端<small>Joint State · IMU · Encoder</small></span>
-            <span className="service-node node-edge"><i />边缘控制<small>ONNX Policy · Low Level</small></span>
-            <span className="service-node node-network"><i />通信链路<small>UDP · CAN · SteamVR</small></span>
-            <span className="service-node node-cloud"><i />数字孪生<small>URDF · MJCF · USD</small></span>
+            <span className="service-node node-sense"><i />设备感知<small>ENCODER · IMU · JOINT STATE</small></span>
+            <span className="service-node node-edge"><i />边缘决策<small>LOW LEVEL · ONNX POLICY</small></span>
+            <span className="service-node node-network"><i />现场互联<small>CAN0 · CAN1 · UDP</small></span>
+            <span className="service-node node-cloud"><i />服务应用<small>TELEOP · TWIN · DIAGNOSIS</small></span>
+            <div className="service-live-rail" aria-label="系统在线状态">
+              <span><small>DEVICE</small><b>22 / 22</b></span>
+              <span><small>FIELD BUS</small><b>CAN0 + CAN1</b></span>
+              <span><small>EDGE POLICY</small><b>25 HZ</b></span>
+            </div>
           </div>
 
           <div className="service-brief-grid">
             <article>
-              <small>PROBLEM BACKGROUND</small>
-              <h3>固定式 IoT 设备缺少物理服务能力</h3>
-              <p>传统传感终端只能“看见”环境，人形机器人作为移动终端可以把感知、操作和服务带到现场。</p>
+              <small>01 / SENSE</small>
+              <h3>现场状态可被持续感知</h3>
+              <p>编码器与 IMU 把关节位置、姿态和运动状态变成边缘控制器可读取的数据。</p>
             </article>
             <article>
-              <small>TECHNICAL SOLUTION</small>
-              <h3>端边协同 + 机器人数字孪生</h3>
-              <p>真实关节、低层总线、仿真资产和网页演示合成一条可展示、可调试、可扩展的服务链路。</p>
+              <small>02 / DECIDE</small>
+              <h3>实时任务在设备侧完成</h3>
+              <p>低层控制与 ONNX 策略运行在板载计算端，关键动作不依赖远端网络往返。</p>
             </article>
             <article>
-              <small>KEY TECH + INNOVATION</small>
-              <h3>关键技术是模块关节与数字孪生闭环</h3>
-              <p>5010 / 6512 模块让硬件按任务尺度组合，服务系统可以从单关节扩展到全身平台。</p>
+              <small>03 / CONNECT</small>
+              <h3>双总线承载全身设备网络</h3>
+              <p>can0 / can1 分担左右侧关节通信，UDP 连接上层遥操作与状态展示。</p>
             </article>
             <article>
-              <small>SCENARIOS · MARKET · VALUE</small>
-              <h3>应用场景、市场前景与产业价值</h3>
-              <p>面向高校实验、机器人课程、巡检演示和远程服务验证，突出低成本复现、模块供应链和产业培训价值。</p>
+              <small>04 / SERVE</small>
+              <h3>数字孪生把数据变成服务</h3>
+              <p>网页端统一呈现设备结构、动作状态和控制链，为远程演示、调试和故障定位提供入口。</p>
             </article>
           </div>
         </div>
 
-        <div className="deliverable-strip">
-          <span><b>01</b>可交互 3D 模型</span>
-          <span><b>02</b>指定动作与爆炸结构</span>
-          <span><b>03</b>5010 / 6512 CAD 对比</span>
-          <span><b>04</b>实物装配证据链</span>
-          <span><b>05</b>仿真到真机流程</span>
+        <div className="deliverable-strip iot-loop-strip" aria-label="物联网服务闭环">
+          <span><b>01</b>任务下发</span>
+          <span><b>02</b>边缘决策</span>
+          <span><b>03</b>关节执行</span>
+          <span><b>04</b>状态回传</span>
+          <span><b>05</b>孪生诊断</span>
         </div>
       </section>
 
       <section className="software-section concise-software" id="software">
-        <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>SIMULATION LINK / 06</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>EDGE TO SERVICE / 06</b></div>
         <div className="software-head">
           <div>
-            <div className="eyebrow"><span /> DIGITAL PIPELINE · 06</div>
-            <h2>一次建模，<br />贯穿仿真与真机。</h2>
+            <div className="eyebrow"><span /> IOT DATA PIPELINE · 06</div>
+            <h2>一条数据链，<br />贯穿感知与服务。</h2>
           </div>
-          <p>工程亮点不需要长代码展示：CAD 资产导出 URDF / MJCF / USD；强化学习在 Isaac Lab 训练；回放脚本导出 ONNX 和部署配置；低层控制通过 UDP 与 CAN 把策略送到真实关节。</p>
+          <p>关节传感数据经 CAN 汇入边缘控制，策略在设备侧实时运行；UDP 承载远程任务与遥操作目标，数字孪生同步动作与设备状态。仿真训练则为边缘策略提供可部署的智能能力。</p>
         </div>
 
-        <div className="pipeline clean-pipeline" aria-label="机器人数字研发流程">
+        <div className="pipeline clean-pipeline" aria-label="物联网数据与控制流程">
           <div className="pipeline-track"><i /><i /><i /><i /></div>
           {[
-            ['01', 'DESIGN', 'CAD DESIGN', '参数化机械设计'],
-            ['02', 'DESCRIBE', 'URDF · MJCF · USD', '统一机器人资产'],
-            ['03', 'TRAIN', 'ISAAC LAB', 'GPU 并行强化学习'],
-            ['04', 'VALIDATE', 'MUJOCO', 'Sim-to-Sim 验证'],
-            ['05', 'DEPLOY', 'REAL ROBOT', '板载实时控制'],
+            ['01', 'SENSE', 'ENCODER · IMU', '现场状态采集'],
+            ['02', 'EDGE', 'LOW LEVEL + ONNX', '设备侧实时决策'],
+            ['03', 'BUS', 'CAN0 · CAN1', '全身节点互联'],
+            ['04', 'UPLINK', 'UDP STREAM', '任务与状态传输'],
+            ['05', 'SERVICE', 'DIGITAL TWIN', '远程控制与诊断'],
           ].map(([number, phase, title, text], index) => (
             <article key={number} className={index === 4 ? 'is-live' : ''}>
               <div className="pipeline-node"><i /><span>{number}</span></div>
@@ -1543,19 +1552,19 @@ function App() {
 
         <div className="code-signal-row" aria-label="源码亮点">
           <article>
-            <small>RL CONFIG</small>
-            <strong>4096 × 24</strong>
-            <p>训练配置以并行环境和 24 步 rollout 提高采样吞吐。</p>
+            <small>FIELD DEVICES</small>
+            <strong>22 JOINT NODES</strong>
+            <p>统一关节顺序把目标位置与测量状态映射到同一套设备模型。</p>
           </article>
           <article>
-            <small>DEPLOY CLOCKS</small>
+            <small>EDGE CLOCKS</small>
             <strong>2000 / 250 / 25 Hz</strong>
-            <p>物理、控制和策略三个时间尺度被写入部署配置。</p>
+            <p>物理、低层控制和策略按不同时间尺度在边缘端协同运行。</p>
           </article>
           <article>
-            <small>REAL HANDOFF</small>
-            <strong>IDLE → INIT → RUN</strong>
-            <p>真机低层状态机先插值到初始姿态，再进入策略运行。</p>
+            <small>NETWORK PATH</small>
+            <strong>CAN ⇄ UDP</strong>
+            <p>现场总线连接关节，上层链路连接遥操作、数字孪生和服务界面。</p>
           </article>
         </div>
 
