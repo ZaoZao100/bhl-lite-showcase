@@ -877,7 +877,7 @@ h1 em { color: transparent; font-style: normal; -webkit-text-stroke: 1px rgba(18
 }
 
 .real-photo-grid-expanded {
-  grid-template-rows: 440px 360px 310px;
+  grid-template-rows: 440px 360px 660px;
   gap: 11px;
   margin-top: 58px;
 }
@@ -894,7 +894,7 @@ h1 em { color: transparent; font-style: normal; -webkit-text-stroke: 1px rgba(18
 .real-photo-grid-expanded .real-photo-transmission-top,
 .real-photo-grid-expanded .real-photo-actuator-close { grid-column: span 4; }
 
-.real-photo-grid-expanded .real-photo-batch { grid-column: span 12; }
+.real-photo-grid-expanded .real-photo-joint-render { grid-column: span 12; }
 
 .real-photo-fullbody img { object-position: center 43%; }
 .real-photo-integration img { object-position: center 49%; }
@@ -903,7 +903,25 @@ h1 em { color: transparent; font-style: normal; -webkit-text-stroke: 1px rgba(18
 .real-photo-transmission img { object-position: center 48%; }
 .real-photo-transmission-top img { object-position: center 40%; }
 .real-photo-actuator-close img { object-position: center 47%; }
-.real-photo-batch img { object-position: center 44%; }
+.real-photo-joint-render {
+  background: #02070b;
+}
+.real-photo-joint-render::before {
+  background: linear-gradient(0deg, rgba(2, 8, 12, .2), transparent 60%);
+}
+.real-photo-joint-render img {
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(1) contrast(1.03) brightness(.95);
+}
+.real-photo-joint-render:hover img {
+  transform: scale(1.012);
+  filter: saturate(1.08) contrast(1.04) brightness(1);
+}
+.real-photo-joint-render figcaption {
+  top: 22px;
+  bottom: auto;
+}
 
 footer { height: 70px; position: relative; z-index: 10; margin: 0 4.4vw; display: flex; align-items: center; gap: 25px; color: #52616d; font-size: 7px; letter-spacing: .21em; }
 .footer-line { height: 1px; flex: 1; position: relative; background: rgba(145, 176, 204, .12); }
@@ -1044,7 +1062,7 @@ footer { height: 70px; position: relative; z-index: 10; margin: 0 4.4vw; display
   .real-photo-grid-expanded .real-photo-transmission,
   .real-photo-grid-expanded .real-photo-transmission-top,
   .real-photo-grid-expanded .real-photo-actuator-close,
-  .real-photo-grid-expanded .real-photo-batch {
+  .real-photo-grid-expanded .real-photo-joint-render {
     grid-column: auto;
     grid-row: auto;
     min-height: 330px;
@@ -1053,6 +1071,14 @@ footer { height: 70px; position: relative; z-index: 10; margin: 0 4.4vw; display
   .real-photo-grid-expanded .real-photo-integration {
     grid-column: 1 / -1;
     min-height: 520px;
+  }
+  .real-photo-grid-expanded .real-photo-joint-render {
+    grid-column: 1 / -1;
+    min-height: 560px;
+  }
+  .real-photo-joint-render img {
+    object-fit: cover;
+    object-position: 58% center;
   }
 }
 
@@ -1078,12 +1104,19 @@ footer { height: 70px; position: relative; z-index: 10; margin: 0 4.4vw; display
   .real-photo-grid-expanded .real-photo-transmission,
   .real-photo-grid-expanded .real-photo-transmission-top,
   .real-photo-grid-expanded .real-photo-actuator-close,
-  .real-photo-grid-expanded .real-photo-batch {
+  .real-photo-grid-expanded .real-photo-joint-render {
     grid-column: auto;
     min-height: 315px;
   }
   .real-photo-grid-expanded .real-photo-fullbody,
   .real-photo-grid-expanded .real-photo-integration {
     min-height: 470px;
+  }
+  .real-photo-grid-expanded .real-photo-joint-render {
+    min-height: 430px;
+  }
+  .real-photo-joint-render figcaption {
+    top: auto;
+    bottom: 14px;
   }
 }

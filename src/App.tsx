@@ -1515,16 +1515,16 @@ function App() {
             <figcaption><span>05 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-transmission-top">
-            <img src={assetUrl('/photos/printed-transmission-top.jpg')} alt="顶视拍摄的打印轮盘、轴承和黄铜嵌件批量排布" loading="lazy" decoding="async" />
+            <img src={assetUrl('/photos/printed-transmission-top.jpg')} alt="顶视拍摄的打印轮盘、轴承和黄铜嵌件批量排布" loading="eager" decoding="async" />
             <figcaption><span>06 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-actuator-close">
-            <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="lazy" decoding="async" />
+            <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="eager" decoding="async" />
             <figcaption><span>07 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
           </figure>
-          <figure className="real-photo-card real-photo-batch">
-            <img src={assetUrl('/photos/actuator-batch.jpg')} alt="大批量执行器、电调和线束测试现场" loading="lazy" decoding="async" />
-            <figcaption><span>08 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
+          <figure className="real-photo-card real-photo-joint-render">
+            <img src={assetUrl('/renders/actuator-6512-engineering.png')} alt="根据 Actuator-6512 Onshape 关节模型生成的工程主视觉" loading="eager" decoding="async" />
+            <figcaption><span>08 / CAD JOINT RENDER</span><b>根据 6512 摆线关节建模生成的工程主视觉</b></figcaption>
           </figure>
         </div>
       </section>
