@@ -1104,7 +1104,7 @@ function App() {
     const requestScrollUpdate = () => {
       if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollState)
     }
-    const observedSections = [...app.querySelectorAll<HTMLElement>('.hero, .details, .hardware-section, .software-section, .real-builds')]
+    const observedSections = [...app.querySelectorAll<HTMLElement>('.hero, .details, .actuator-family-section, .hardware-section, .service-system-section, .software-section, .real-builds')]
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1141,33 +1141,36 @@ function App() {
       <nav className="page-rail" aria-label="页面章节导航">
         <a href="#" data-code="01"><i />MODEL</a>
         <a href="#details" data-code="02"><i />PROFILE</a>
-        <a href="#hardware" data-code="03"><i />HARDWARE</a>
-        <a href="#software" data-code="04"><i />PIPELINE</a>
-        <a href="#real-builds" data-code="05"><i />BUILD</a>
+        <a href="#actuators" data-code="03"><i />JOINTS</a>
+        <a href="#hardware" data-code="04"><i />HARDWARE</a>
+        <a href="#service-system" data-code="05"><i />3S</a>
+        <a href="#software" data-code="06"><i />PIPELINE</a>
+        <a href="#real-builds" data-code="07"><i />BUILD</a>
       </nav>
       <header className="nav">
         <a className="brand" href="#" aria-label="BHL Arm 首页">
           <span className="brand-mark"><i /><i /></span>
           <span>BHL <b>LITE</b></span>
         </a>
-        <div className="nav-status"><span /> LIVE SIMULATION <i>／ 01</i></div>
+        <div className="nav-status"><span /> IOT 3S DEMO <i>／ 01</i></div>
         <nav>
+          <a href="#actuators">JOINTS</a>
           <a href="#hardware">HARDWARE</a>
-          <a href="#software">SOFTWARE</a>
+          <a href="#service-system">3S SYSTEM</a>
           <a href="#real-builds">REAL BUILD</a>
         </nav>
       </header>
 
       <div className="data-marquee" aria-hidden="true">
-        <div>22 DOF SYSTEM &nbsp;◆&nbsp; OPEN HARDWARE &nbsp;◆&nbsp; REAL-TIME KINEMATICS &nbsp;◆&nbsp; MODULAR ACTUATION &nbsp;◆&nbsp; BERKELEY HUMANOID LITE &nbsp;◆&nbsp; 22 DOF SYSTEM &nbsp;◆&nbsp; OPEN HARDWARE &nbsp;◆&nbsp; REAL-TIME KINEMATICS</div>
+        <div>22 DOF SYSTEM &nbsp;◆&nbsp; IOT SMART SERVICE &nbsp;◆&nbsp; REAL-TIME KINEMATICS &nbsp;◆&nbsp; 5010 / 6512 MODULAR ACTUATION &nbsp;◆&nbsp; BERKELEY HUMANOID LITE &nbsp;◆&nbsp; DIGITAL TWIN &nbsp;◆&nbsp; SIM-TO-REAL PIPELINE</div>
       </div>
 
       <section className="hero">
         <div className="side-index" aria-hidden="true"><b>01</b><span>BHL DIGITAL<br />TWIN INTERFACE</span><i /></div>
         <div className="copy">
-          <div className="eyebrow"><span /> BERKELEY HUMANOID LITE · ORIGINAL</div>
-          <h1>OPEN<br />HUMANOID<br /><em>ROBOTICS.</em></h1>
-          <p>以模块化 3D 打印执行器构建的<br />开源全身人形机器人平台。</p>
+          <div className="eyebrow"><span /> BERKELEY HUMANOID LITE · IOT 3S DEMO</div>
+          <h1>SMART<br />SERVICE<br /><em>HUMANOID.</em></h1>
+          <p>把开源人形机器人、数字孪生与远程服务链路<br />组合成可运行的物联网智慧服务系统。</p>
           <div className="actions">
             <button
               className="primary"
@@ -1337,11 +1340,65 @@ function App() {
         </div>
       </section>
 
+      <section className="actuator-family-section" id="actuators">
+        <div className="section-energy-label" aria-hidden="true"><span>JOINT FAMILY</span><i /><b>CAD MODELS / 03</b></div>
+        <div className="actuator-family-head">
+          <div>
+            <div className="eyebrow"><span /> ACTUATOR CAD FAMILY · 03</div>
+            <h2>先看两种关节，<br /><em>再看整机落地。</em></h2>
+          </div>
+          <p>官方 releases 同时列出 Actuator-5010 与 Actuator-6512 的 Onshape CAD 和 3D 打印项目。两者共享摆线减速、打印壳体、输出轴与电机外壳这套模块化思路，但尺寸定位和制造文件不同。</p>
+        </div>
+
+        <div className="joint-family-layout" aria-label="5010 与 6512 关节模型特点">
+          <article className="joint-family-card joint-family-5010">
+            <div className="joint-family-visual">
+              <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 Onshape 摆线关节模型" loading="eager" decoding="async" />
+              <span>COMPACT / 5010</span>
+            </div>
+            <div className="joint-family-copy">
+              <small>01 / ACTUATOR-5010</small>
+              <h3>紧凑型摆线关节。</h3>
+              <p>文档中包含 Ender / Bambu 打印变体、End Cap、5010_profile 与 RI-60_profile，适合展示小尺寸关节如何被拆成可打印、可维护的标准件。</p>
+              <div className="joint-feature-list">
+                <span><b>PRINT</b><i>Ender + Bambu variants</i></span>
+                <span><b>PROFILE</b><i>5010 / RI-60 DXF</i></span>
+                <span><b>STRUCTURE</b><i>End Cap + Hex Standoff</i></span>
+              </div>
+            </div>
+          </article>
+
+          <article className="joint-family-card joint-family-6512">
+            <div className="joint-family-visual">
+              <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 Onshape 摆线关节模型" loading="eager" decoding="async" />
+              <span>LARGER / 6512</span>
+            </div>
+            <div className="joint-family-copy">
+              <small>02 / ACTUATOR-6512</small>
+              <h3>大尺寸承载关节。</h3>
+              <p>6512 文档包含 M6C12 profile、Bambu 版本、输出轴、输入轴和整机装配 BOM，更适合作为髋、膝、肩等高负载位置的工程展示主角。</p>
+              <div className="joint-feature-list">
+                <span><b>PROFILE</b><i>M6C12 DXF</i></span>
+                <span><b>ASSEMBLY</b><i>Full Assembly + BOM</i></span>
+                <span><b>ROLE</b><i>High-load joint layer</i></span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div className="joint-system-strip" aria-label="两种关节的共同设计特点">
+          <div><small>SHARED CORE</small><b>Cycloidal Disk</b><span>摆线盘把电机高速旋转转换成高减速输出。</span></div>
+          <div><small>PRINTABLE BODY</small><b>Housing Variants</b><span>壳体按打印机和装配工艺拆分，便于低成本复现。</span></div>
+          <div><small>MODEL TO BUILD</small><b>CAD + MakerWorld</b><span>Releases 同时给出 CAD 与打印项目，形成从模型到制造的闭环。</span></div>
+          <div><small>SERVICE NODE</small><b>Actuator as IoT Endpoint</b><span>每个关节都能成为状态采集、远程调试和维护诊断的服务节点。</span></div>
+        </div>
+      </section>
+
       <section className="hardware-section photo-led-section" id="hardware">
-        <div className="section-energy-label" aria-hidden="true"><span>ACTUATION CORE</span><i /><b>MECHANICAL LAYER / 03</b></div>
-        <div className="section-index" aria-hidden="true">03</div>
+        <div className="section-energy-label" aria-hidden="true"><span>ACTUATION CORE</span><i /><b>MECHANICAL LAYER / 04</b></div>
+        <div className="section-index" aria-hidden="true">04</div>
         <div className="section-copy">
-          <div className="eyebrow"><span /> MODULAR HARDWARE · 03</div>
+          <div className="eyebrow"><span /> MODULAR HARDWARE · 04</div>
           <h2>这个项目的核心，<br /><em>其实是关节。</em></h2>
           <p>模块化 3D 打印齿轮箱把无刷电机、编码器、轴承和壳体收进一个可复制单元。网页展示重点放在实物：能看到材料、线束、铜绕组、螺钉和批量装配痕迹。</p>
           <div className="hardware-tags">
@@ -1400,11 +1457,67 @@ function App() {
         </div>
       </section>
 
+      <section className="service-system-section" id="service-system">
+        <div className="section-energy-label" aria-hidden="true"><span>SMART SERVICE</span><i /><b>IOT 3S / 05</b></div>
+        <div className="service-system-head">
+          <div>
+            <div className="eyebrow"><span /> IOT SMART SERVICE SYSTEM · 05</div>
+            <h2>比赛重点不是“会动”，<br /><em>而是形成服务系统。</em></h2>
+          </div>
+          <p>这个网页按“端、边、网、云、服务”的物联网逻辑重排：机器人关节采集状态，板载控制器执行策略，低延迟网络承载遥操作，数字孪生负责展示、仿真、诊断和技术报告呈现。</p>
+        </div>
+
+        <div className="service-system-layout" aria-label="物联网智慧服务系统架构">
+          <div className="service-orbit-map">
+            <div className="service-core">
+              <small>3S</small>
+              <b>Smart Service System</b>
+              <span>可运行创新技术演示系统</span>
+            </div>
+            <span className="service-node node-sense"><i />感知端<small>Joint State · IMU · Encoder</small></span>
+            <span className="service-node node-edge"><i />边缘控制<small>ONNX Policy · Low Level</small></span>
+            <span className="service-node node-network"><i />通信链路<small>UDP · CAN · SteamVR</small></span>
+            <span className="service-node node-cloud"><i />数字孪生<small>URDF · MJCF · USD</small></span>
+          </div>
+
+          <div className="service-brief-grid">
+            <article>
+              <small>PROBLEM BACKGROUND</small>
+              <h3>固定式 IoT 设备缺少物理服务能力</h3>
+              <p>传统传感终端只能“看见”环境，人形机器人作为移动终端可以把感知、操作和服务带到现场。</p>
+            </article>
+            <article>
+              <small>TECHNICAL SOLUTION</small>
+              <h3>端边协同 + 机器人数字孪生</h3>
+              <p>真实关节、低层总线、仿真资产和网页演示合成一条可展示、可调试、可扩展的服务链路。</p>
+            </article>
+            <article>
+              <small>INNOVATION DESIGN</small>
+              <h3>用开源关节降低系统复现门槛</h3>
+              <p>5010 / 6512 模块让硬件按任务尺度组合，服务系统可以从单关节扩展到全身平台。</p>
+            </article>
+            <article>
+              <small>APPLICATION VALUE</small>
+              <h3>教育、巡检、远程操作与展示交互</h3>
+              <p>面向高校实验、机器人课程、设备维护演示和远程服务验证，突出低成本与产业培训价值。</p>
+            </article>
+          </div>
+        </div>
+
+        <div className="deliverable-strip">
+          <span><b>01</b>可交互 3D 模型</span>
+          <span><b>02</b>指定动作与爆炸结构</span>
+          <span><b>03</b>5010 / 6512 CAD 对比</span>
+          <span><b>04</b>实物装配证据链</span>
+          <span><b>05</b>仿真到真机流程</span>
+        </div>
+      </section>
+
       <section className="software-section concise-software" id="software">
-        <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>SIMULATION LINK / 04</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>SIMULATION LINK / 06</b></div>
         <div className="software-head">
           <div>
-            <div className="eyebrow"><span /> DIGITAL PIPELINE · 04</div>
+            <div className="eyebrow"><span /> DIGITAL PIPELINE · 06</div>
             <h2>一次建模，<br />贯穿仿真与真机。</h2>
           </div>
           <p>源码亮点不需要长代码展示：资产从 Onshape 导出 URDF / MJCF / USD；强化学习在 Isaac Lab 训练；回放脚本导出 ONNX 和部署 YAML；低层控制通过 UDP 与 CAN 把策略送到真实关节。</p>
@@ -1484,86 +1597,55 @@ function App() {
       </section>
 
       <section className="real-builds photo-wall-section" id="real-builds">
-        <div className="section-energy-label" aria-hidden="true"><span>REAL MANUFACTURING</span><i /><b>BUILD FLOOR / 05</b></div>
+        <div className="section-energy-label" aria-hidden="true"><span>REAL MANUFACTURING</span><i /><b>BUILD FLOOR / 07</b></div>
         <div className="real-builds-head">
           <div>
-            <div className="eyebrow"><span /> FROM PARTS TO HUMANOID · 05</div>
-            <h2>先看关节模型，<br /><em>再看实物落地。</em></h2>
+            <div className="eyebrow"><span /> FROM PARTS TO HUMANOID · 07</div>
+            <h2>模型之后，<br /><em>看实物怎样长出来。</em></h2>
           </div>
-          <p>Releases 页面把 6512 和 5010 两个摆线关节单独列为 CAD / 3D 打印项目；这里先对比两种关节模型，再接实物制造照片，让观众能顺着“模型、零件、驱动、整机”的路线看下去。</p>
+          <p>实物照片按制造路径重排：先看单个关节原型，再看电机入壳、轴承嵌件、驱动板、批量调试，最后进入全身装配。这样比单纯堆图更像一条完整技术报告证据链。</p>
         </div>
 
         <div className="real-photo-grid real-photo-grid-expanded" aria-label="Berkeley Humanoid Lite 真实制造与装配照片">
-          <article className="joint-comparison-panel" aria-label="5010 与 6512 摆线关节模型对比">
-            <div className="joint-comparison-copy">
-              <small>RELEASED CAD FAMILY</small>
-              <h3>5010 与 6512：同一套摆线关节思路，面向不同承载尺度。</h3>
-              <p>两个 Onshape 文档都包含 Cycloidal Disk、Housing、Output Shaft、Motor Shell 等核心结构。5010 文档额外出现 Ender / Bambu 打印变体与 End Cap，适合强调紧凑制造；6512 文档包含 M6C12 profile、Hex Standoff 和 Bambu 版本，更像整机高负载关节的主力模块。</p>
-              <div className="joint-shared-core">
-                <span>CYCLOIDAL DISK</span>
-                <span>PRINTED HOUSING</span>
-                <span>OUTPUT SHAFT</span>
-                <span>MOTOR SHELL</span>
-              </div>
-            </div>
-            <div className="joint-model-pair">
-              <figure className="joint-model-card joint-model-5010">
-                <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 Onshape 摆线关节模型" loading="eager" decoding="async" />
-                <figcaption>
-                  <small>01 / ACTUATOR-5010</small>
-                  <b>紧凑型关节模型</b>
-                  <span>Ender / Bambu variants · End Cap · 5010 profile</span>
-                </figcaption>
-              </figure>
-              <figure className="joint-model-card joint-model-6512">
-                <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 Onshape 摆线关节模型" loading="eager" decoding="async" />
-                <figcaption>
-                  <small>02 / ACTUATOR-6512</small>
-                  <b>高承载关节模型</b>
-                  <span>M6C12 profile · Hex standoff · Bambu variants</span>
-                </figcaption>
-              </figure>
-            </div>
-          </article>
           <figure className="real-photo-card real-photo-actuator-close">
             <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="eager" decoding="async" />
-            <figcaption><span>03 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
+            <figcaption><span>01 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-actuators">
             <img src={assetUrl('/photos/actuator-production.jpg')} alt="5010 和 6512 无刷电机安装进白色打印关节壳体" loading="eager" decoding="async" />
-            <figcaption><span>04 / ACTUATOR PRODUCTION</span><b>无刷电机进入打印壳体</b></figcaption>
+            <figcaption><span>02 / ACTUATOR PRODUCTION</span><b>无刷电机进入打印壳体</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-transmission">
             <img src={assetUrl('/photos/printed-transmission.jpg')} alt="批量制造的打印轮盘、轴承和黄铜嵌件" loading="eager" decoding="async" />
-            <figcaption><span>05 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
+            <figcaption><span>03 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-electronics">
             <img src={assetUrl('/photos/control-electronics.jpg')} alt="批量准备的电机驱动板与磁编码器板" loading="eager" decoding="async" />
-            <figcaption><span>06 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
+            <figcaption><span>04 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-transmission-top">
             <img src={assetUrl('/photos/printed-transmission-top.jpg')} alt="顶视拍摄的打印轮盘、轴承和黄铜嵌件批量排布" loading="eager" decoding="async" />
-            <figcaption><span>07 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
+            <figcaption><span>05 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-batch">
             <img src={assetUrl('/photos/actuator-batch.jpg')} alt="大批量执行器、电调和线束测试现场" loading="eager" decoding="async" />
-            <figcaption><span>08 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
+            <figcaption><span>06 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-integration">
             <img src={assetUrl('/photos/system-integration.jpg')} alt="Berkeley Humanoid Lite 整机平铺装配与全身线束集成" loading="eager" decoding="async" />
-            <figcaption><span>09 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
+            <figcaption><span>07 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-fullbody">
             <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 整机站立集成实物照片" loading="eager" decoding="async" />
-            <figcaption><span>10 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
+            <figcaption><span>08 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
           </figure>
         </div>
       </section>
 
       <footer>
-        <span>BERKELEY HUMANOID LITE — OPEN PLATFORM</span>
+        <span>BERKELEY HUMANOID LITE — IOT 3S SHOWCASE</span>
         <div className="footer-line"><i /></div>
-        <span>DESIGN · SIMULATE · DEPLOY</span>
+        <span>DESIGN · CONNECT · SERVICE</span>
       </footer>
     </main>
   )

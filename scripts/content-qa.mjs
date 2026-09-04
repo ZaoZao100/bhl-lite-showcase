@@ -40,10 +40,12 @@ const modelEnvelope = await desktop.locator('.viewer').evaluate((element) => ({
   height: element.dataset.modelHeight,
 }))
 
-for (const selector of ['#hardware', '#software', '#real-builds']) {
+for (const selector of ['#actuators', '#hardware', '#service-system', '#software', '#real-builds']) {
   await desktop.locator(selector).scrollIntoViewIfNeeded()
   await desktop.waitForTimeout(1050)
+  if (selector === '#actuators') await desktop.locator(selector).screenshot({ path: 'actuator-family-section-qa.png' })
   if (selector === '#hardware') await desktop.locator(selector).screenshot({ path: 'hardware-section-qa.png' })
+  if (selector === '#service-system') await desktop.locator(selector).screenshot({ path: 'service-system-section-qa.png' })
   if (selector === '#software') await desktop.locator(selector).screenshot({ path: 'software-section-qa.png' })
   if (selector === '#real-builds') await desktop.locator(selector).screenshot({ path: 'real-builds-qa.png' })
 }
