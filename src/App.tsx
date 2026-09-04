@@ -1488,23 +1488,46 @@ function App() {
         <div className="real-builds-head">
           <div>
             <div className="eyebrow"><span /> FROM PARTS TO HUMANOID · 05</div>
-            <h2>多看实物，<br /><em>少看空话。</em></h2>
+            <h2>先看关节模型，<br /><em>再看实物落地。</em></h2>
           </div>
-          <p>这一段把你给的实拍图放大：整机、平铺集成、执行器批量、驱动板、编码器、打印轮盘。观众能直接看到“开源设计”落到桌面制造时的样子。</p>
+          <p>Releases 页面把 6512 和 5010 两个摆线关节单独列为 CAD / 3D 打印项目；这里先对比两种关节模型，再接实物制造照片，让观众能顺着“模型、零件、驱动、整机”的路线看下去。</p>
         </div>
 
         <div className="real-photo-grid real-photo-grid-expanded" aria-label="Berkeley Humanoid Lite 真实制造与装配照片">
-          <figure className="real-photo-card real-photo-fullbody">
-            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 整机站立集成实物照片" loading="eager" decoding="async" />
-            <figcaption><span>01 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
-          </figure>
-          <figure className="real-photo-card real-photo-integration">
-            <img src={assetUrl('/photos/system-integration.jpg')} alt="Berkeley Humanoid Lite 整机平铺装配与全身线束集成" loading="eager" decoding="async" />
-            <figcaption><span>02 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
-          </figure>
-          <figure className="real-photo-card real-photo-electronics">
-            <img src={assetUrl('/photos/control-electronics.jpg')} alt="批量准备的电机驱动板与磁编码器板" loading="eager" decoding="async" />
-            <figcaption><span>03 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
+          <article className="joint-comparison-panel" aria-label="5010 与 6512 摆线关节模型对比">
+            <div className="joint-comparison-copy">
+              <small>RELEASED CAD FAMILY</small>
+              <h3>5010 与 6512：同一套摆线关节思路，面向不同承载尺度。</h3>
+              <p>两个 Onshape 文档都包含 Cycloidal Disk、Housing、Output Shaft、Motor Shell 等核心结构。5010 文档额外出现 Ender / Bambu 打印变体与 End Cap，适合强调紧凑制造；6512 文档包含 M6C12 profile、Hex Standoff 和 Bambu 版本，更像整机高负载关节的主力模块。</p>
+              <div className="joint-shared-core">
+                <span>CYCLOIDAL DISK</span>
+                <span>PRINTED HOUSING</span>
+                <span>OUTPUT SHAFT</span>
+                <span>MOTOR SHELL</span>
+              </div>
+            </div>
+            <div className="joint-model-pair">
+              <figure className="joint-model-card joint-model-5010">
+                <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 Onshape 摆线关节模型" loading="eager" decoding="async" />
+                <figcaption>
+                  <small>01 / ACTUATOR-5010</small>
+                  <b>紧凑型关节模型</b>
+                  <span>Ender / Bambu variants · End Cap · 5010 profile</span>
+                </figcaption>
+              </figure>
+              <figure className="joint-model-card joint-model-6512">
+                <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 Onshape 摆线关节模型" loading="eager" decoding="async" />
+                <figcaption>
+                  <small>02 / ACTUATOR-6512</small>
+                  <b>高承载关节模型</b>
+                  <span>M6C12 profile · Hex standoff · Bambu variants</span>
+                </figcaption>
+              </figure>
+            </div>
+          </article>
+          <figure className="real-photo-card real-photo-actuator-close">
+            <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="eager" decoding="async" />
+            <figcaption><span>03 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-actuators">
             <img src={assetUrl('/photos/actuator-production.jpg')} alt="5010 和 6512 无刷电机安装进白色打印关节壳体" loading="eager" decoding="async" />
@@ -1514,17 +1537,25 @@ function App() {
             <img src={assetUrl('/photos/printed-transmission.jpg')} alt="批量制造的打印轮盘、轴承和黄铜嵌件" loading="eager" decoding="async" />
             <figcaption><span>05 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
           </figure>
+          <figure className="real-photo-card real-photo-electronics">
+            <img src={assetUrl('/photos/control-electronics.jpg')} alt="批量准备的电机驱动板与磁编码器板" loading="eager" decoding="async" />
+            <figcaption><span>06 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
+          </figure>
           <figure className="real-photo-card real-photo-transmission-top">
             <img src={assetUrl('/photos/printed-transmission-top.jpg')} alt="顶视拍摄的打印轮盘、轴承和黄铜嵌件批量排布" loading="eager" decoding="async" />
-            <figcaption><span>06 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
+            <figcaption><span>07 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
           </figure>
-          <figure className="real-photo-card real-photo-actuator-close">
-            <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="eager" decoding="async" />
-            <figcaption><span>07 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
+          <figure className="real-photo-card real-photo-batch">
+            <img src={assetUrl('/photos/actuator-batch.jpg')} alt="大批量执行器、电调和线束测试现场" loading="eager" decoding="async" />
+            <figcaption><span>08 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
           </figure>
-          <figure className="real-photo-card real-photo-joint-render">
-            <img src={assetUrl('/renders/actuator-6512-engineering.png')} alt="根据 Actuator-6512 Onshape 关节模型生成的工程主视觉" loading="eager" decoding="async" />
-            <figcaption><span>08 / CAD JOINT RENDER</span><b>根据 6512 摆线关节建模生成的工程主视觉</b></figcaption>
+          <figure className="real-photo-card real-photo-integration">
+            <img src={assetUrl('/photos/system-integration.jpg')} alt="Berkeley Humanoid Lite 整机平铺装配与全身线束集成" loading="eager" decoding="async" />
+            <figcaption><span>09 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
+          </figure>
+          <figure className="real-photo-card real-photo-fullbody">
+            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 整机站立集成实物照片" loading="eager" decoding="async" />
+            <figcaption><span>10 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
           </figure>
         </div>
       </section>
