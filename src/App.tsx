@@ -288,9 +288,9 @@ function Viewer({
     camera.position.set(1.51, -1.7, 0.97)
     camera.up.set(0, 0, 1)
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
-    const normalPixelRatio = Math.min(window.devicePixelRatio, 1.6)
-    const explosionPixelRatio = Math.max(0.8, Math.min(window.devicePixelRatio, 1.12) * 0.82)
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' })
+    const normalPixelRatio = Math.min(window.devicePixelRatio, 1.15)
+    const explosionPixelRatio = Math.max(0.65, Math.min(window.devicePixelRatio, 1) * 0.72)
     renderer.setPixelRatio(normalPixelRatio)
     renderer.setSize(host.clientWidth, host.clientHeight)
     renderer.outputColorSpace = THREE.SRGBColorSpace
@@ -308,7 +308,7 @@ function Viewer({
     const key = new THREE.DirectionalLight('#dcecff', 2.0)
     key.position.set(2.3, -2, 3.1)
     key.castShadow = true
-    key.shadow.mapSize.set(2048, 2048)
+    key.shadow.mapSize.set(1024, 1024)
     scene.add(key)
 
     const rim = new THREE.DirectionalLight('#4c8dff', 2.6)
@@ -375,19 +375,19 @@ function Viewer({
       side: THREE.DoubleSide,
     })
 
-    const floor = new THREE.Mesh(new THREE.CircleGeometry(0.76, 128), floorMaterial)
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(0.76, 96), floorMaterial)
     floor.receiveShadow = true
     floor.position.z = -0.003
     scene.add(floor)
 
     const halo = new THREE.Mesh(
-      new THREE.RingGeometry(0.606, 0.618, 128),
+      new THREE.RingGeometry(0.606, 0.618, 96),
       new THREE.MeshBasicMaterial({ color: '#4385eb', transparent: true, opacity: 0.42, side: THREE.DoubleSide }),
     )
     halo.position.z = 0.001
     scene.add(halo)
 
-    const polarGrid = new THREE.PolarGridHelper(0.73, 24, 7, 96, '#2e73ad', '#16324b')
+    const polarGrid = new THREE.PolarGridHelper(0.73, 20, 6, 72, '#2e73ad', '#16324b')
     polarGrid.rotation.x = Math.PI / 2
     polarGrid.position.z = 0.0025
     const polarMaterial = polarGrid.material as THREE.LineBasicMaterial
@@ -397,7 +397,7 @@ function Viewer({
     scene.add(polarGrid)
 
     const hologramBeam = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.22, 0.62, 1.52, 64, 1, true),
+      new THREE.CylinderGeometry(0.22, 0.62, 1.52, 44, 1, true),
       new THREE.MeshBasicMaterial({
         color: '#269cff',
         transparent: true,
@@ -412,7 +412,7 @@ function Viewer({
     scene.add(hologramBeam)
 
     const effectCenter = new THREE.Vector3(0, 0, 0.46)
-    const effectParticleCount = 160
+    const effectParticleCount = 96
     const effectPositions = new Float32Array(effectParticleCount * 3)
     const effectDirections = new Float32Array(effectParticleCount * 3)
     const effectPhases = new Float32Array(effectParticleCount)
@@ -455,7 +455,7 @@ function Viewer({
     energyParticles.visible = false
     scene.add(energyParticles)
 
-    const trailMaxCount = 24
+    const trailMaxCount = 16
     const trailPositions = new Float32Array(trailMaxCount * 2 * 3)
     const trailColors = new Float32Array(trailMaxCount * 2 * 3)
     for (let index = 0; index < trailMaxCount; index += 1) {
@@ -491,7 +491,7 @@ function Viewer({
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })
-    const energyShell = new THREE.Mesh(new THREE.SphereGeometry(0.47, 20, 14), shellMaterial)
+    const energyShell = new THREE.Mesh(new THREE.SphereGeometry(0.47, 14, 10), shellMaterial)
     energyShell.position.copy(effectCenter)
     energyShell.visible = false
     scene.add(energyShell)
@@ -504,7 +504,7 @@ function Viewer({
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       })
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34 + index * 0.018, 0.003, 8, 112), material)
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34 + index * 0.018, 0.003, 6, 72), material)
       ring.position.copy(effectCenter)
       if (index === 1) ring.rotation.x = Math.PI / 2
       if (index === 2) ring.rotation.y = Math.PI / 2
@@ -525,7 +525,7 @@ function Viewer({
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })
-    const shockSphere = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 10), shockMaterial)
+    const shockSphere = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 8), shockMaterial)
     shockSphere.position.copy(effectCenter)
     shockSphere.visible = false
     scene.add(shockSphere)
@@ -942,26 +942,30 @@ function Viewer({
       const energyPulse = 0.5 + Math.sin(elapsed * 5.4) * 0.5
       energyParticles.visible = effectVisible
       energyShell.visible = effectVisible
-      effectMaterial.opacity = effectAmount * (0.48 + energyPulse * 0.3)
-      effectMaterial.size = 0.009 + effectAmount * 0.009
-      const positionAttribute = effectGeometry.getAttribute('position') as THREE.BufferAttribute
-      const positionArray = positionAttribute.array as Float32Array
-      for (let index = 0; index < effectParticleCount; index += 1) {
-        const phase = effectPhases[index]
-        const stream = (elapsed * 0.24 + phase) % 1
-        const radius = 0.1 + effectAmount * (0.2 + phase * 0.24) + stream * 0.055
-        const swirl = elapsed * (0.18 + phase * 0.12)
-        const sourceX = effectDirections[index * 3]
-        const sourceY = effectDirections[index * 3 + 1]
-        const sourceZ = effectDirections[index * 3 + 2]
-        const directionX = sourceX * Math.cos(swirl) - sourceY * Math.sin(swirl)
-        const directionY = sourceX * Math.sin(swirl) + sourceY * Math.cos(swirl)
-        positionArray[index * 3] = effectCenter.x + directionX * radius
-        positionArray[index * 3 + 1] = effectCenter.y + directionY * radius
-        positionArray[index * 3 + 2] = Math.max(0.03, effectCenter.z + sourceZ * radius)
+      if (effectVisible) {
+        effectMaterial.opacity = effectAmount * (0.48 + energyPulse * 0.3)
+        effectMaterial.size = 0.009 + effectAmount * 0.009
+        const positionAttribute = effectGeometry.getAttribute('position') as THREE.BufferAttribute
+        const positionArray = positionAttribute.array as Float32Array
+        for (let index = 0; index < effectParticleCount; index += 1) {
+          const phase = effectPhases[index]
+          const stream = (elapsed * 0.24 + phase) % 1
+          const radius = 0.1 + effectAmount * (0.2 + phase * 0.24) + stream * 0.055
+          const swirl = elapsed * (0.18 + phase * 0.12)
+          const sourceX = effectDirections[index * 3]
+          const sourceY = effectDirections[index * 3 + 1]
+          const sourceZ = effectDirections[index * 3 + 2]
+          const directionX = sourceX * Math.cos(swirl) - sourceY * Math.sin(swirl)
+          const directionY = sourceX * Math.sin(swirl) + sourceY * Math.cos(swirl)
+          positionArray[index * 3] = effectCenter.x + directionX * radius
+          positionArray[index * 3 + 1] = effectCenter.y + directionY * radius
+          positionArray[index * 3 + 2] = Math.max(0.03, effectCenter.z + sourceZ * radius)
+        }
+        positionAttribute.needsUpdate = true
+        energyParticles.rotation.z = elapsed * 0.06
+      } else {
+        effectMaterial.opacity = 0
       }
-      positionAttribute.needsUpdate = true
-      energyParticles.rotation.z = elapsed * 0.06
 
       shockSphere.visible = shockStrength > 0.005
       shockMaterial.opacity = shockStrength * 0.82
@@ -1254,42 +1258,42 @@ function App() {
         </div>
       </section>
 
-      <section className="details" id="details">
+      <section className="details evidence-section" id="details">
         <div className="section-energy-label" aria-hidden="true"><span>URDF VERIFIED</span><i /><b>DIGITAL ASSET / ONLINE</b></div>
-        <div className="details-intro">
+        <div className="details-intro evidence-head">
           <div className="details-heading">
             <div className="eyebrow"><span /> PLATFORM OVERVIEW · 02</div>
-            <h2>先看整机，<br />再拆解系统。</h2>
-            <p>从项目关键数据和真实工程网格开始，依次进入执行器硬件、仿真控制与真实制造现场。</p>
+            <h2>一台能被复现的<br />开源人形机器人。</h2>
+            <p>页面只保留能被官方文档、论文和源码支撑的核心信息：成本目标、自由度、3D 打印执行器、模型资产和仿真到真机的控制链路。</p>
           </div>
           <aside className="overview-manifest" aria-label="数字模型清单">
-            <div className="manifest-head"><span>MODEL MANIFEST</span><b>VERIFIED / 26.04</b></div>
-            <div><i>01</i><span><small>GEOMETRY</small><b>26 STL MESHES</b></span><em>READY</em></div>
-            <div><i>02</i><span><small>KINEMATICS</small><b>22 REVOLUTE JOINTS</b></span><em>READY</em></div>
-            <div><i>03</i><span><small>SOURCE</small><b>ONSHAPE → URDF</b></span><em>SYNC</em></div>
+            <div className="manifest-head"><span>EVIDENCE STACK</span><b>DOCS + CODE + PHOTOS</b></div>
+            <div><i>01</i><span><small>OPEN PLATFORM</small><b>SUB-$5K TARGET</b></span><em>DOC</em></div>
+            <div><i>02</i><span><small>KINEMATICS</small><b>10 ARM + 12 LEG JOINTS</b></span><em>URDF</em></div>
+            <div><i>03</i><span><small>SIM CHAIN</small><b>ISAAC LAB → ONNX → ROBOT</b></span><em>CODE</em></div>
           </aside>
         </div>
 
-        <div className="metric-grid" aria-label="项目关键数据">
+        <div className="metric-grid proof-grid" aria-label="项目关键数据">
           <article>
-            <small>BUILD TARGET</small>
+            <small>ACCESSIBLE HUMANOID</small>
             <strong><i>&lt;</i>$5K</strong>
-            <p>面向实验室与个人开发者的<br />全尺寸开源人形平台</p>
+            <p>官方论文与文档把低成本、可定制和开源作为平台目标。</p>
           </article>
           <article>
-            <small>FULL BODY</small>
+            <small>FULL-BODY CHAIN</small>
             <strong>22<i>DOF</i></strong>
-            <p>双臂 10 轴 + 双腿 12 轴<br />组成完整关节运动链</p>
+            <p>源码资产定义 10 个双臂关节与 12 个双腿关节。</p>
           </article>
           <article>
-            <small>ACTUATOR FAMILY</small>
-            <strong>02<i>TYPE</i></strong>
-            <p>6512 × 10 / 5010 × 12<br />模块化关节执行器</p>
+            <small>DESKTOP FABRICATION</small>
+            <strong>200<i>MM</i></strong>
+            <p>主要打印件面向 200 × 200 × 200 mm 桌面 FDM 设备。</p>
           </article>
           <article>
-            <small>PRINT VOLUME</small>
-            <strong>200<i>MM CUBE</i></strong>
-            <p>常见桌面级 3D 打印机<br />即可制造主要结构件</p>
+            <small>DEPLOYABLE POLICY</small>
+            <strong>25<i>HZ</i></strong>
+            <p>训练回放脚本导出 ONNX，并生成部署所需控制周期。</p>
           </article>
         </div>
 
@@ -1325,27 +1329,27 @@ function App() {
           </div>
         </div>
 
-        <div className="resource-strip">
-          <span>OPEN SOURCE PLATFORM</span>
-          <b>CAD / URDF / SIMULATION / CONTROL</b>
-          <a href="#real-builds">查看真实制造现场 ↓</a>
+        <div className="source-proof-strip">
+          <span>OFFICIAL PAPER</span>
+          <span>GITBOOK BUILD DOCS</span>
+          <span>GITHUB SOURCE TREE</span>
+          <span>USER-PROVIDED REAL PHOTOS</span>
         </div>
       </section>
 
-      <section className="hardware-section" id="hardware">
+      <section className="hardware-section photo-led-section" id="hardware">
         <div className="section-energy-label" aria-hidden="true"><span>ACTUATION CORE</span><i /><b>MECHANICAL LAYER / 03</b></div>
         <div className="section-index" aria-hidden="true">03</div>
         <div className="section-copy">
           <div className="eyebrow"><span /> MODULAR HARDWARE · 03</div>
-          <h2>把高性能关节，<br /><em>做成可复现模块。</em></h2>
-          <p>打印壳体、无刷电机、磁编码器与驱动板被压缩进统一的关节语言。两种规格覆盖上肢与下肢，让制造、替换和调试都更直接。</p>
+          <h2>这个项目的核心，<br /><em>其实是关节。</em></h2>
+          <p>模块化 3D 打印齿轮箱把无刷电机、编码器、轴承和壳体收进一个可复制单元。网页展示重点放在实物：能看到材料、线束、铜绕组、螺钉和批量装配痕迹。</p>
           <div className="hardware-tags">
             <span>3D PRINTED GEARBOX</span>
             <span>AS5600 ENCODER</span>
             <span>BLDC + FOC</span>
             <span>CAN BUS</span>
           </div>
-          <a className="tech-link" href="#hardware-guide">阅读站内装配指南 <b>↓</b></a>
         </div>
 
         <div className="hardware-photo-cluster" aria-label="从单关节到全身集成的实物照片">
@@ -1364,6 +1368,24 @@ function App() {
           <div className="hardware-photo-status"><i /> REAL BUILD / PROVIDED PHOTOS</div>
         </div>
 
+        <div className="hardware-proof-cards">
+          <article>
+            <small>MECHANICAL</small>
+            <h3>白色打印件 + 金属轴承</h3>
+            <p>实物照片能看到打印层纹、黄铜嵌件和轴承阵列，对应源码资产中的 22 个关节安装位。</p>
+          </article>
+          <article>
+            <small>ELECTRICAL</small>
+            <h3>编码器与驱动分离调试</h3>
+            <p>AS5600 磁编码器、驱动板和相线在装配前批量测试，降低整机一次性调错的风险。</p>
+          </article>
+          <article>
+            <small>NETWORK</small>
+            <h3>CAN 总线分侧连接</h3>
+            <p>低层代码把左右腿挂到 can0 / can1，并以统一关节顺序读写目标位置与测量值。</p>
+          </article>
+        </div>
+
         <div className="build-sequence">
           {[
             ['01', 'PRINT', '打印壳体与结构件'],
@@ -1376,62 +1398,19 @@ function App() {
             </div>
           ))}
         </div>
-
-        <div className="hardware-guide" id="hardware-guide">
-          <div className="guide-console-head">
-            <span>HARDWARE BUILD FILE / INLINE</span>
-            <b>DOCS EXTRACTED · 04 STAGES</b>
-          </div>
-          <div className="hardware-guide-grid">
-            <article>
-              <i>01 / FABRICATION</i>
-              <h3>打印与工具准备</h3>
-              <p>最低打印空间为 <b>200 × 200 × 200 mm</b>。执行器外壳、输出轴和电机壳使用更高强度的执行器打印配置，其余结构件可用更快参数；左右镜像件按对应方向生成。</p>
-              <div><span>M2—M6 HEX</span><span>MOSTLY M3</span><span>DESKTOP FDM</span></div>
-            </article>
-            <article>
-              <i>02 / POSITION SENSE</i>
-              <h3>磁编码器安装</h3>
-              <p><b>AS5600</b> 需要按项目说明重新配置板载电阻，并使用编码器随附的径向充磁磁铁；普通轴向圆磁铁不能替代。磁铁居中固定到电机转子轴。</p>
-              <div><span>ABSOLUTE ANGLE</span><span>RADIAL MAGNET</span><span>I²C</span></div>
-            </article>
-            <article>
-              <i>03 / POWER & DATA</i>
-              <h3>线束与 CAN 网络</h3>
-              <p>动力侧采用 <b>14 AWG</b> 多股硅胶线；CAN、SDA 与 SCL 使用 <b>30 AWG</b> 多股硅胶线。驱动器上的 CAN 焊盘较脆弱，线束必须做应力释放。</p>
-              <div><span>14 AWG POWER</span><span>30 AWG SIGNAL</span><span>STRAIN RELIEF</span></div>
-            </article>
-            <article>
-              <i>04 / COMMISSIONING</i>
-              <h3>上电前检查</h3>
-              <p>先确认相线、编码器方向、关节零位与 CAN ID，再逐关节低限幅测试。高功率电子系统具有真实风险，调试阶段应保留急停、限流和机械支撑。</p>
-              <div><span>ZERO OFFSET</span><span>CAN ID</span><span>CURRENT LIMIT</span></div>
-            </article>
-          </div>
-          <div className="foc-readout">
-            <div className="foc-flow" aria-label="FOC 控制流程">
-              <span>PHASE CURRENT<small>IA · IB · IC</small></span><i>→</i>
-              <span>CLARKE<small>α · β</small></span><i>→</i>
-              <span>PARK<small>ID · IQ</small></span><i>→</i>
-              <span>PI LOOP<small>ID ≈ 0</small></span><i>→</i>
-              <span>SVPWM<small>3-PHASE</small></span>
-            </div>
-            <p><small>CONTROL CHARACTER</small><b>把电流变成可控转矩。</b> Clarke / Park 变换把三相电流投影到 d–q 坐标系；控制器压低励磁方向的 I<sub>d</sub>、调节产转矩的 I<sub>q</sub>，再经逆变换与 SVPWM 驱动电机。项目文档还给出带抗积分饱和的 PI 逻辑和位置 PD 外环。</p>
-          </div>
-        </div>
       </section>
 
-      <section className="software-section" id="software">
+      <section className="software-section concise-software" id="software">
         <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>SIMULATION LINK / 04</b></div>
         <div className="software-head">
           <div>
             <div className="eyebrow"><span /> DIGITAL PIPELINE · 04</div>
             <h2>一次建模，<br />贯穿仿真与真机。</h2>
           </div>
-          <p>机械设计从 Onshape 导出为 URDF、MJCF 与 USD；策略在 Isaac Lab 中训练，经 MuJoCo 做 sim-to-sim 验证，再以相同控制接口部署到机器人。</p>
+          <p>源码亮点不需要长代码展示：资产从 Onshape 导出 URDF / MJCF / USD；强化学习在 Isaac Lab 训练；回放脚本导出 ONNX 和部署 YAML；低层控制通过 UDP 与 CAN 把策略送到真实关节。</p>
         </div>
 
-        <div className="pipeline" aria-label="机器人数字研发流程">
+        <div className="pipeline clean-pipeline" aria-label="机器人数字研发流程">
           <div className="pipeline-track"><i /><i /><i /><i /></div>
           {[
             ['01', 'DESIGN', 'ONSHAPE', '参数化机械设计'],
@@ -1449,7 +1428,25 @@ function App() {
           ))}
         </div>
 
-        <div className="simulation-showcase" id="simulation-visuals">
+        <div className="code-signal-row" aria-label="源码亮点">
+          <article>
+            <small>RL CONFIG</small>
+            <strong>4096 × 24</strong>
+            <p>训练配置以并行环境和 24 步 rollout 提高采样吞吐。</p>
+          </article>
+          <article>
+            <small>DEPLOY CLOCKS</small>
+            <strong>2000 / 250 / 25 Hz</strong>
+            <p>物理、控制和策略三个时间尺度被写入部署配置。</p>
+          </article>
+          <article>
+            <small>REAL HANDOFF</small>
+            <strong>IDLE → INIT → RUN</strong>
+            <p>真机低层状态机先插值到初始姿态，再进入策略运行。</p>
+          </article>
+        </div>
+
+        <div className="simulation-showcase tight-simulation" id="simulation-visuals">
           <figure className="simulation-frame simulation-frame-primary">
             <img src={assetUrl('/renders/bhl-simulation-trajectory.png')} alt="基于机器人外形生成的强化学习步态训练技术可视化" loading="lazy" />
             <div className="sim-scanline" aria-hidden="true" />
@@ -1465,21 +1462,9 @@ function App() {
               <span><b>20<em>S</em></b><small>EPISODE</small></span>
             </div>
           </figure>
-
-          <figure className="simulation-frame simulation-frame-fit">
-            <img src={assetUrl('/renders/bhl-motion-fitting.png')} alt="机器人参考轨迹与物理动作拟合技术可视化" loading="lazy" />
-            <div className="sim-scanline" aria-hidden="true" />
-            <div className="sim-visual-label"><i /> CONCEPT VISUAL / MOTION FITTING</div>
-            <div className="fit-copy">
-              <small>02 / REFERENCE → PHYSICS</small>
-              <h3>不是复制姿态，<br />而是在动力学约束中拟合动作。</h3>
-              <div className="fit-flow"><span>参考轨迹</span><i>→</i><span>关节目标</span><i>→</i><span>接触求解</span><i>→</i><span>策略输出</span></div>
-            </div>
-            <figcaption>本图为基于实际模型外形制作的技术概念可视化，用于说明动作轨迹、接触力与策略拟合关系。</figcaption>
-          </figure>
         </div>
 
-        <figure className="teleop-feature">
+        <figure className="teleop-feature compact-teleop">
           <img src={assetUrl('/renders/bhl-teleoperation-ik.png')} alt="双手柄位姿经 UDP 和微分逆运动学映射至机器人双臂的技术概念图" loading="lazy" />
           <div className="teleop-shade" />
           <div className="teleop-feature-label"><i /> 03 / DUAL-ARM TELEOPERATION</div>
@@ -1498,181 +1483,49 @@ function App() {
         </figure>
       </section>
 
-      <section className="real-builds" id="real-builds">
+      <section className="real-builds photo-wall-section" id="real-builds">
         <div className="section-energy-label" aria-hidden="true"><span>REAL MANUFACTURING</span><i /><b>BUILD FLOOR / 05</b></div>
         <div className="real-builds-head">
           <div>
             <div className="eyebrow"><span /> FROM PARTS TO HUMANOID · 05</div>
-            <h2>从打印件，<br /><em>一直做到整机。</em></h2>
+            <h2>多看实物，<br /><em>少看空话。</em></h2>
           </div>
-          <p>这些不是效果图。关节外壳、轴承轮盘、驱动板和线束经过批量准备，最终汇集成一台可以调试的双足人形机器人。</p>
+          <p>这一段把你给的实拍图放大：整机、平铺集成、执行器批量、驱动板、编码器、打印轮盘。观众能直接看到“开源设计”落到桌面制造时的样子。</p>
         </div>
 
-        <div className="real-photo-grid" aria-label="Berkeley Humanoid Lite 真实制造与装配照片">
+        <div className="real-photo-grid real-photo-grid-expanded" aria-label="Berkeley Humanoid Lite 真实制造与装配照片">
+          <figure className="real-photo-card real-photo-fullbody">
+            <img src={assetUrl('/photos/fullbody-integration.jpg')} alt="Berkeley Humanoid Lite 整机站立集成实物照片" loading="eager" decoding="async" />
+            <figcaption><span>01 / STANDING PROTOTYPE</span><b>白色主体、黑色中框与外露线束</b></figcaption>
+          </figure>
           <figure className="real-photo-card real-photo-integration">
             <img src={assetUrl('/photos/system-integration.jpg')} alt="Berkeley Humanoid Lite 整机平铺装配与全身线束集成" loading="eager" decoding="async" />
-            <figcaption><span>01 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
+            <figcaption><span>02 / SYSTEM INTEGRATION</span><b>全身关节与线束进入实机</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-electronics">
             <img src={assetUrl('/photos/control-electronics.jpg')} alt="批量准备的电机驱动板与磁编码器板" loading="eager" decoding="async" />
-            <figcaption><span>02 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
+            <figcaption><span>03 / CONTROL ELECTRONICS</span><b>驱动与编码器批量准备</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-actuators">
             <img src={assetUrl('/photos/actuator-production.jpg')} alt="5010 和 6512 无刷电机安装进白色打印关节壳体" loading="eager" decoding="async" />
-            <figcaption><span>03 / ACTUATOR PRODUCTION</span><b>无刷电机进入打印壳体</b></figcaption>
+            <figcaption><span>04 / ACTUATOR PRODUCTION</span><b>无刷电机进入打印壳体</b></figcaption>
           </figure>
           <figure className="real-photo-card real-photo-transmission">
             <img src={assetUrl('/photos/printed-transmission.jpg')} alt="批量制造的打印轮盘、轴承和黄铜嵌件" loading="eager" decoding="async" />
-            <figcaption><span>04 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
+            <figcaption><span>05 / PRINTED TRANSMISSION</span><b>打印轮盘、轴承与嵌件装配</b></figcaption>
           </figure>
-        </div>
-      </section>
-
-      <section className="technical-archive" id="technical-archive" hidden>
-        <div className="section-energy-label" aria-hidden="true"><span>SOURCE DECODE</span><i /><b>CODE INTELLIGENCE / 05</b></div>
-        <div className="archive-head">
-          <div>
-            <div className="eyebrow"><span /> TECHNICAL ARCHIVE · 05</div>
-            <h2>代码很多，<br /><em>这里只看四件事。</em></h2>
-          </div>
-          <p>训练规模、控制节奏、资产一致性和真机安全——四个亮点，足够理解这套系统为什么能够从仿真走向机器人。</p>
-        </div>
-
-        <div className="code-highlights" aria-label="代码中的四个核心设计亮点">
-          <article className="code-highlight highlight-scale">
-            <div className="highlight-id"><span>01</span><b>TRAINING AT SCALE</b></div>
-            <div className="scale-visual" aria-hidden="true">
-              <strong>4096</strong>
-              <div className="env-lattice">{Array.from({ length: 32 }, (_, index) => <i key={index} />)}</div>
-              <span>PARALLEL WORLDS / GPU</span>
-            </div>
-            <div className="highlight-copy">
-              <small>最值得关注的训练设计</small>
-              <h3>一次更新，吞下近十万个环境步。</h3>
-              <p>4096 个环境同时采样，每个环境收集 24 步，一次 PPO 更新形成 <b>98,304</b> 个环境步。真正的亮点不是“跑了很多次”，而是把机器人学习变成高吞吐的数据生产线。</p>
-              <code>4096 ENVS × 24 STEPS = 98,304 SAMPLES</code>
-            </div>
-          </article>
-
-          <article className="code-highlight highlight-clocks">
-            <div className="highlight-id"><span>02</span><b>THREE CLOCKS</b></div>
-            <div className="clock-visual" aria-label="仿真、控制与策略三个运行频率">
-              <div className="clock-ring ring-physics"><span><b>2K</b>HZ<small>PHYSICS</small></span></div>
-              <div className="clock-ring ring-control"><span><b>250</b>HZ<small>CONTROL</small></span></div>
-              <div className="clock-ring ring-policy"><span><b>25</b>HZ<small>POLICY</small></span></div>
-            </div>
-            <div className="highlight-copy">
-              <small>Sim-to-Real 的时间契约</small>
-              <h3>三个时钟，锁住仿真到真机的节奏。</h3>
-              <p>MuJoCo 高频求解接触，底层控制保持关节稳定，策略低频输出目标。训练、验证和部署共享 <b>25 Hz</b> 策略节拍，减少换平台时的行为漂移。</p>
-              <code>0.0005s → 0.004s → 0.040s</code>
-            </div>
-          </article>
-
-          <article className="code-highlight highlight-assets">
-            <div className="highlight-id"><span>03</span><b>ONE ROBOT IDENTITY</b></div>
-            <div className="asset-chain" aria-label="机器人资产生成链">
-              <span><i>01</i>ONSHAPE<small>CAD SOURCE</small></span><b>→</b>
-              <span><i>02</i>URDF<small>KINEMATICS</small></span><b>→</b>
-              <span><i>03</i>MJCF<small>MUJOCO</small></span><b>→</b>
-              <span><i>04</i>USD<small>ISAAC LAB</small></span>
-            </div>
-            <div className="highlight-copy">
-              <small>资产一致性</small>
-              <h3>不是维护三台机器人，而是生成三个运行版本。</h3>
-              <p>Onshape 是唯一机械源，脚本生成 URDF、MJCF 和 USD，并持续沿用同一套 <b>22 关节</b>命名、网格和默认姿态。这条一致性链路比单个文件格式更重要。</p>
-              <code>CAD → DESCRIPTION → SIMULATION</code>
-            </div>
-          </article>
-
-          <article className="code-highlight highlight-safety">
-            <div className="highlight-id"><span>04</span><b>SAFE POLICY HANDOFF</b></div>
-            <div className="state-visual" aria-label="真机策略接管状态机">
-              <span><i />IDLE<small>电机待机</small></span><b>→</b>
-              <span className="is-warm"><i />RL_INIT<small>插值到初始姿态</small></span><b>→</b>
-              <span className="is-live"><i />RL_RUNNING<small>策略正式接管</small></span>
-            </div>
-            <div className="highlight-copy">
-              <small>真机安全边界</small>
-              <h3>策略不会突然接管机器人。</h3>
-              <p>状态机先把关节平滑带到 RL 初始姿态，再开放策略输出；左右腿分别进入 CAN0 与 CAN1。这个过渡层看起来朴素，却直接决定真机第一次启动是否可控。</p>
-              <code>IDLE → INTERPOLATE → POLICY</code>
-            </div>
-          </article>
-        </div>
-
-      </section>
-
-      <section className="open-stack" id="opensource" hidden>
-        <div className="section-energy-label" aria-hidden="true"><span>OPEN RELEASE</span><i /><b>SOURCE MATRIX / 06</b></div>
-        <div className="open-stack-head">
-          <div className="eyebrow"><span /> OPEN RELEASE STACK · 06</div>
-          <h2>仓库内容，<br /><em>直接在这里展开。</em></h2>
-          <p>无需跳转到代码托管页面：工作区结构、核心子模块、部署边界与许可证信息已整理为站内仓库浏览器。</p>
-        </div>
-        <div className="repository-browser" id="repository">
-          <div className="repo-browser-head">
-            <div><i /><span>BERKELEY-HUMANOID-LITE</span><b>／ MAIN</b></div>
-            <span>WORKSPACE SNAPSHOT · INLINE</span>
-          </div>
-          <div className="repo-browser-body">
-            <div className="repo-tree" aria-label="仓库目录结构">
-              <div className="tree-title"><span>PROJECT TREE</span><b>10 DISPLAY ITEMS</b></div>
-              <code><i>▾</i> berkeley-humanoid-lite/</code>
-              <code className="tree-l1"><i>▾</i> source/</code>
-              <code className="tree-l2 is-blue">berkeley_humanoid_lite/</code>
-              <code className="tree-l2 is-gold">berkeley_humanoid_lite_assets/</code>
-              <code className="tree-l2 is-green">berkeley_humanoid_lite_lowlevel/</code>
-              <code className="tree-l1">scripts/</code>
-              <code className="tree-l1">configs/</code>
-              <code className="tree-l1">checkpoints/</code>
-              <code className="tree-l1">docker/</code>
-              <code className="tree-l1 is-file">motor_configuration.json</code>
-              <code className="tree-l1 is-file">pyproject.toml</code>
-            </div>
-            <article className="repo-readme">
-              <small>README.MD / OVERVIEW</small>
-              <h3>一个工作区，覆盖完整机器人软件流程。</h3>
-              <p>项目仓库把策略训练、Sim-to-Sim 验证、真机部署、动作捕捉和遥操作控制组织在同一工作区中。各功能按照 Isaac Lab 扩展方式拆分，主要运行入口集中在根目录的 <code>scripts/</code>。</p>
-              <div className="repo-capabilities">
-                <span>POLICY TRAINING</span><span>SIM2SIM</span><span>REAL DEPLOY</span><span>MOTION CAPTURE</span><span>TELEOP</span>
-              </div>
-              <div className="license-row">
-                <span><i>CODE</i><b>MIT LICENSE</b></span>
-                <span><i>ASSETS</i><b>CC BY-SA 4.0</b></span>
-                <span><i>RUNTIME</i><b>PYTHON 3.11</b></span>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <div className="release-grid" aria-label="仓库核心模块">
-          {[
-            { tag: 'ENV', title: 'ISAAC LAB TASKS', path: 'source/berkeley_humanoid_lite/', text: 'Isaac Lab 环境、机器人任务定义与策略训练扩展。' },
-            { tag: 'ASSET', title: 'ROBOT DESCRIPTIONS', path: 'source/berkeley_humanoid_lite_assets/', text: 'URDF、MJCF、USD 机器人描述，以及从 Onshape 导出资产的脚本。' },
-            { tag: 'CTRL', title: 'REAL-ROBOT LOW LEVEL', path: 'source/berkeley_humanoid_lite_lowlevel/', text: '运行在真实机器人上的低层代码；真机部署只需要这个目录中的内容。' },
-            { tag: 'RUN', title: 'FLOW ENTRY POINTS', path: 'scripts/', text: '训练、验证、部署、动作捕捉和遥操作等流程的集中入口。' },
-            { tag: 'CFG', title: 'CONFIG & CHECKPOINTS', path: 'configs/ · checkpoints/ · motor_configuration.json', text: '运行参数、策略检查点与执行器映射配置。' },
-          ].map((module, index) => (
-            <article key={module.tag}>
-              <span className="release-num">0{index + 1}</span>
-              <i>{module.tag}</i>
-              <h3>{module.title}</h3>
-              <code>{module.path}</code>
-              <p>{module.text}</p>
-              <b>LOADED / INLINE</b>
-            </article>
-          ))}
-        </div>
-        <div className="final-cta">
-          <div>
-            <span>READY TO BUILD?</span>
-            <h3>从第一颗螺丝，开始复现。</h3>
-          </div>
-          <div className="cta-actions">
-            <a href="#hardware-guide">硬件档案 <i>↑</i></a>
-            <a href="#technical-archive">代码解读 <i>↑</i></a>
-          </div>
+          <figure className="real-photo-card real-photo-transmission-top">
+            <img src={assetUrl('/photos/printed-transmission-top.jpg')} alt="顶视拍摄的打印轮盘、轴承和黄铜嵌件批量排布" loading="lazy" decoding="async" />
+            <figcaption><span>06 / BEARING ARRAY</span><b>顶视看轴承阵列与嵌件分布</b></figcaption>
+          </figure>
+          <figure className="real-photo-card real-photo-actuator-close">
+            <img src={assetUrl('/photos/actuator-prototype.jpg')} alt="单个白色 3D 打印执行器近景" loading="lazy" decoding="async" />
+            <figcaption><span>07 / SINGLE MODULE</span><b>单关节原型的同轴结构</b></figcaption>
+          </figure>
+          <figure className="real-photo-card real-photo-batch">
+            <img src={assetUrl('/photos/actuator-batch.jpg')} alt="大批量执行器、电调和线束测试现场" loading="lazy" decoding="async" />
+            <figcaption><span>08 / BATCH TEST</span><b>执行器从单件进入批量验证</b></figcaption>
+          </figure>
         </div>
       </section>
 
