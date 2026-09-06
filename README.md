@@ -1,16 +1,99 @@
-# 3S Humanoid Service System
+# 3S 人形物联网服务系统 · 交互展示网页
 
-Interactive web presentation for a 3S humanoid service robot system, including a URDF-driven 3D model, motion presets, exploded-view animation, actuator model comparison, simulation highlights, and real manufacturing photography.
+这是 3S 人形物联网服务系统的产品展示网站。页面以可交互的 3D 人形机器人为核心，将关节结构、动作控制、设备连接、边缘计算、仿真训练和实物制造过程组织成一条完整的展示路径。
 
-## Local development
+在线访问：<https://zaozao100.github.io/bhl-lite-showcase/>
+
+> 当前仓库保存的是 2026-09-06 确认的网页版本。后续改动应新建分支，避免直接覆盖这一备份。
+
+## 页面功能
+
+### 交互式 3D 数字模型
+
+- 使用 URDF 与 STL 网格加载 22 自由度人形机器人模型。
+- 支持鼠标或触控拖动，从不同方向查看机器人结构。
+- 保持与页面关联的固定观察尺度，滚动页面时不会误触缩放。
+- 采用白色金属主体、黑色金属躯干与环境反射，突出关节和整机结构。
+
+### 动作演示
+
+页面内置六组动作：待机、招手、下蹲、战斗、步行和立正。动作直接驱动 URDF 关节，其中下蹲以待机时的脚底最低点为基准进行补偿，减少脚部离地；步行采用对侧手臂与腿的自然摆动关系。
+
+### 结构展开与重新组装
+
+“探索结构”会触发整机爆炸视图：主要部件沿三维空间分布展开，并配合视角旋转、能量环和状态反馈。展开后按钮切换为“重新组装”，可将全部部件恢复到机器人原始结构。
+
+### 关节与硬件说明
+
+- 展示 5010 紧凑型关节与 6512 承载型关节的 CAD 特征和定位。
+- 解释无刷电机、编码器、驱动板和摆线传动如何组成可控制、可反馈的智能关节节点。
+- 通过关节原型、批量装配、控制电子和整机集成照片呈现制造过程。
+
+### 物联网服务链路
+
+网站将系统概括为一条闭环链路：
+
+```text
+远程任务 → 边缘控制 → 双 CAN 关节网络 → 动作执行
+    ↑                                      ↓
+数字孪生与服务界面 ← UDP 状态链路 ← 传感反馈与诊断
+```
+
+这一部分重点展示关节状态采集、设备侧策略运行、任务传输、数字孪生同步以及远程运维之间的关系。
+
+### 仿真与策略展示
+
+通过运动拟合、仿真轨迹、足底接触事件和遥操作逆运动学图片，说明动作数据如何经过训练与拟合，最终映射到真实机器人的关节目标。
+
+## 技术实现
+
+- React + TypeScript + Vite
+- Three.js + URDF Loader
+- 本地化 Inter 与 Noto Sans SC 字体资源
+- 响应式桌面与移动端布局
+- `prefers-reduced-motion` 动画减弱支持
+- GitHub Actions 自动构建并发布至 GitHub Pages
+
+## 本地运行
+
+需要 Node.js 22 或兼容版本。
 
 ```bash
 npm install
 npm run dev
 ```
 
-## GitHub Pages
+启动后访问终端显示的本地地址，通常为 `http://127.0.0.1:5173/`。
 
-The repository includes an automatic GitHub Pages workflow. Every push to the `main` branch builds and publishes the website. Asset paths are resolved from the repository name, so both project Pages sites and `<username>.github.io` repositories are supported.
+## 构建与检查
 
-After pushing the repository, open **Settings → Pages** on GitHub and select **GitHub Actions** as the source. The published URL will appear in the `Deploy website to GitHub Pages` workflow run.
+```bash
+npm run build
+node scripts/presentation-check.mjs
+node scripts/layout-audit.mjs
+```
+
+生产文件生成在 `dist/` 目录。页面发布由 `.github/workflows/deploy-pages.yml` 自动完成：推送到 `main` 后，工作流会安装依赖、构建网页并更新线上地址。
+
+## 主要目录
+
+```text
+src/                    页面组件、3D 交互和视觉样式
+public/humanoid/        URDF 与压缩模型网格
+public/renders/         工程、关节、仿真和拟合效果图
+public/photos/          关节制造与整机实物照片
+public/fonts/           网页本地字体及许可证
+scripts/                页面布局、内容和交互检查脚本
+.github/workflows/      自动构建与发布配置
+```
+
+## 协作建议
+
+从此备份继续开发时，请先同步仓库并创建独立分支：
+
+```bash
+git pull origin main
+git switch -c feature/功能名称
+```
+
+完成后提交自己的分支，再通过 Pull Request 合并。不要使用强制推送覆盖 `main`，也不要删除当前备份标签。

@@ -282,6 +282,7 @@ function Viewer({
   useEffect(() => {
     const host = hostRef.current
     if (!host) return
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(34, host.clientWidth / host.clientHeight, 0.01, 50)
@@ -1004,21 +1005,21 @@ function Viewer({
         key.castShadow = !explosionOrbit
         renderer.shadowMap.needsUpdate = true
       }
-      controls.autoRotate = explosionOrbit || (!userControlledCamera && elapsed < 4.5)
-      controls.autoRotateSpeed = explosionOrbit ? 1.22 : 0.32
+      controls.autoRotate = !reducedMotion.matches && (explosionOrbit || (!userControlledCamera && elapsed < 4.5))
+      controls.autoRotateSpeed = explosionOrbit ? 0.65 : 0.22
       controls.update()
       host.dataset.cameraDistance = camera.position.distanceTo(controls.target).toFixed(6)
 
       const stableCameraPosition = camera.position.clone()
       const stableFov = camera.fov
       const cameraShockAge = Math.max(0, impactAge - 0.09)
-      if (isExploded && cameraShockAge < 0.68) {
+      if (!reducedMotion.matches && isExploded && cameraShockAge < 0.68) {
         const decay = Math.exp(-cameraShockAge * 6.2)
         const impact = Math.sin(cameraShockAge * 78) * decay
-        camera.position.x += impact * 0.014
-        camera.position.y += Math.cos(cameraShockAge * 93) * decay * 0.01
-        camera.position.z += Math.sin(cameraShockAge * 67) * decay * 0.007
-        camera.fov = stableFov - Math.sin(Math.min(1, cameraShockAge / 0.52) * Math.PI) * 3.2
+        camera.position.x += impact * 0.003
+        camera.position.y += Math.cos(cameraShockAge * 93) * decay * 0.002
+        camera.position.z += Math.sin(cameraShockAge * 67) * decay * 0.001
+        camera.fov = stableFov - Math.sin(Math.min(1, cameraShockAge / 0.52) * Math.PI) * 1.2
         camera.updateProjectionMatrix()
       }
       renderer.render(scene, camera)
@@ -1150,14 +1151,14 @@ function App() {
       <header className="nav">
         <a className="brand" href="#" aria-label="3S Robot 首页">
           <span className="brand-mark"><i /><i /></span>
-          <span>3S <b>ROBOT</b></span>
+          <span>3S <b>Robot</b></span>
         </a>
-        <div className="nav-status"><span /> IOT 3S DEMO <i>／ 01</i></div>
+        <div className="nav-status">人形物联网服务系统</div>
         <nav>
-          <a href="#actuators">DEVICE</a>
-          <a href="#hardware">EDGE</a>
-          <a href="#service-system">IOT LOOP</a>
-          <a href="#real-builds">FIELD</a>
+          <a href="#actuators">智能关节</a>
+          <a href="#hardware">硬件</a>
+          <a href="#service-system">物联服务</a>
+          <a href="#real-builds">实物</a>
         </nav>
       </header>
 
@@ -1168,9 +1169,9 @@ function App() {
       <section className="hero">
         <div className="side-index" aria-hidden="true"><b>01</b><span>3S SERVICE<br />DIGITAL TWIN</span><i /></div>
         <div className="copy">
-          <div className="eyebrow"><span /> MOBILE IOT SERVICE TERMINAL · 3S</div>
-          <h1>IOT SERVICE<br /><em>HUMANOID.</em></h1>
-          <p>让机器人从“会动的机器”变成可感知、可联网、<br />可远程控制、可数字化运维的移动物联网终端。</p>
+          <div className="eyebrow">3S 人形机器人</div>
+          <h1>感知世界。<br /><em>连接行动。</em></h1>
+          <p>将感知、控制与服务融为一体。<br />让每一次行动，都有回应。</p>
           <div className="hero-iot-route" aria-label="物联网数据链">
             <span><i />感知</span><b>→</b><span><i />边缘</span><b>→</b><span><i />互联</span><b>→</b><span><i />服务</span>
           </div>
@@ -1181,7 +1182,6 @@ function App() {
               aria-label={exploded ? '重新组装' : '探索结构'}
             >
               <span className="primary-copy">
-                <small>{exploded ? 'ASSEMBLY PROTOCOL' : 'STRUCTURE SCAN'}</small>
                 <b>{exploded ? '重新组装' : '探索结构'}</b>
               </span>
               <span className="primary-icon" aria-hidden="true">
@@ -1209,7 +1209,7 @@ function App() {
           </div>
           <div className="telemetry telemetry-top">
             <span>EDGE GATEWAY / 3S-22</span>
-            <b>{exploded ? 'DEVICE TOPOLOGY VIEW' : '22 JOINT NODES ONLINE'}</b>
+            <b>{exploded ? 'DEVICE TOPOLOGY VIEW' : '22 个关节节点 ONLINE'}</b>
           </div>
           <div className="telemetry telemetry-bottom">
             <span>CAN0 + CAN1 / UDP UPLINK</span>
@@ -1221,21 +1221,21 @@ function App() {
             setLoaded={setLoadedStable}
             apiRef={viewerApi}
           />
-          {!loaded && <div className="loader"><span /><small>ASSEMBLING DIGITAL TWIN</small></div>}
+          {!loaded && <div className="loader"><span /><small>正在载入数字模型</small></div>}
           <div className="model-caption">
             <span className="pulse" />
             <div><small>FULL-BODY DIGITAL TWIN</small><strong>{exploded ? 'EXPLODED VIEW' : '22-DOF MOTION'}</strong></div>
           </div>
           <div className="interaction-hint">
             <span>↔</span>
-            <small>按住拖动旋转<br />模型比例已锁定</small>
+            <small>拖动，换个角度</small>
           </div>
         </div>
 
         <div className="motion-console" id="architecture">
           <div className="motion-console__head">
-            <div><span className="pulse" /><small>MOTION STUDIO</small></div>
-            <strong>{exploded ? 'ASSEMBLY EXPLODED' : `${MOTIONS.find((item) => item.id === motion)?.code} SEQUENCE`}</strong>
+            <div><span className="pulse" /><small>动作体验</small></div>
+            <strong>{exploded ? '结构展开中' : '选择一个动作'}</strong>
           </div>
           <div className="motion-list">
             {MOTIONS.map((item, index) => (
@@ -1253,13 +1253,13 @@ function App() {
         </div>
 
         <aside className="specs" id="system">
-          <div><strong>22</strong><span>FIELD DEVICE<br />JOINT NODES</span></div>
-          <div><strong>2</strong><span>EDGE BUS<br />CAN CHANNELS</span></div>
-          <div><strong>25<i>HZ</i></strong><span>ON-DEVICE<br />POLICY RATE</span></div>
+          <div><strong>22</strong><span>关节节点</span></div>
+          <div><strong>2</strong><span>CAN 总线</span></div>
+          <div><strong>25<i>Hz</i></strong><span>策略频率</span></div>
         </aside>
 
         <div className="scroll-cue" aria-hidden="true">
-          <span>SCROLL TO EXPLORE</span>
+          <span>向下，了解更多</span>
           <i><b /></i>
         </div>
       </section>
@@ -1268,7 +1268,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>URDF VERIFIED</span><i /><b>DIGITAL ASSET / ONLINE</b></div>
         <div className="details-intro evidence-head">
           <div className="details-heading">
-            <div className="eyebrow"><span /> SYSTEM OVERVIEW · 02</div>
+            <div className="eyebrow"><span /> 系统概览</div>
             <h2>一台机器人，<br />一套移动物联网系统。</h2>
             <p>22 个关节负责执行与反馈，板载计算负责实时决策，双 CAN 与 UDP 负责数据互联，数字孪生负责可视化、远程操控和运维诊断。</p>
           </div>
@@ -1282,22 +1282,22 @@ function App() {
 
         <div className="metric-grid proof-grid" aria-label="项目关键数据">
           <article>
-            <small>CONNECTED DEVICE</small>
+            <small>关节节点</small>
             <strong>22<i>NODES</i></strong>
             <p>每个关节同时承担动作执行和状态反馈，组成分布式现场设备层。</p>
           </article>
           <article>
-            <small>FULL-BODY CHAIN</small>
+            <small>全身自由度</small>
             <strong>22<i>DOF</i></strong>
             <p>源码资产定义 10 个双臂关节与 12 个双腿关节。</p>
           </article>
           <article>
-            <small>DESKTOP FABRICATION</small>
+            <small>桌面制造</small>
             <strong>200<i>MM</i></strong>
             <p>主要打印件面向 200 × 200 × 200 mm 桌面 FDM 设备。</p>
           </article>
           <article>
-            <small>DEPLOYABLE POLICY</small>
+            <small>边缘策略</small>
             <strong>25<i>HZ</i></strong>
             <p>训练回放脚本导出 ONNX，并生成部署所需控制周期。</p>
           </article>
@@ -1347,7 +1347,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>DEVICE LAYER</span><i /><b>CONNECTED ACTUATORS / 03</b></div>
         <div className="actuator-family-head">
           <div>
-            <div className="eyebrow"><span /> IOT DEVICE LAYER · 03</div>
+            <div className="eyebrow"><span /> 智能关节</div>
             <h2>两种智能关节，<br /><em>构成现场设备层。</em></h2>
           </div>
           <p>5010 与 6512 不只是机械关节。电机负责执行，编码器持续反馈位置，驱动器完成闭环控制，再通过 CAN 接入板载网关；机械模块由此成为可寻址、可诊断的现场节点。</p>
@@ -1357,12 +1357,12 @@ function App() {
           <article className="joint-family-card joint-family-5010">
             <div className="joint-family-visual">
               <img src={assetUrl('/renders/onshape-actuator-5010-thumb.png')} alt="Actuator-5010 摆线关节 CAD 模型" loading="eager" decoding="async" />
-              <span>COMPACT / 5010</span>
+              <span>5010</span>
             </div>
             <div className="joint-family-copy">
-              <small>01 / ACTUATOR-5010</small>
+              <small>5010 系列</small>
               <h3>紧凑型摆线关节。</h3>
-              <p>文档中包含 Ender / Bambu 打印变体、End Cap、5010_profile 与 RI-60_profile，适合展示小尺寸关节如何被拆成可打印、可维护的标准件。</p>
+              <p>紧凑的摆线结构，配合可拆卸端盖与标准连接件。提供多种打印适配方案，让制造与维护更直接。</p>
               <div className="joint-feature-list">
                 <span><b>PRINT</b><i>Ender + Bambu variants</i></span>
                 <span><b>PROFILE</b><i>5010 / RI-60 DXF</i></span>
@@ -1374,12 +1374,12 @@ function App() {
           <article className="joint-family-card joint-family-6512">
             <div className="joint-family-visual">
               <img src={assetUrl('/renders/onshape-actuator-thumb.png')} alt="Actuator-6512 摆线关节 CAD 模型" loading="eager" decoding="async" />
-              <span>LARGER / 6512</span>
+              <span>6512</span>
             </div>
             <div className="joint-family-copy">
-              <small>02 / ACTUATOR-6512</small>
+              <small>6512 系列</small>
               <h3>大尺寸承载关节。</h3>
-              <p>6512 文档包含 M6C12 profile、Bambu 版本、输出轴、输入轴和整机装配 BOM，更适合作为髋、膝、肩等高负载位置的工程展示主角。</p>
+              <p>更大的关节结构，整合输入轴、输出轴与摆线传动。完整装配模型与零件清单，让承载结构一目了然。</p>
               <div className="joint-feature-list">
                 <span><b>PROFILE</b><i>M6C12 DXF</i></span>
                 <span><b>ASSEMBLY</b><i>Full Assembly + BOM</i></span>
@@ -1390,10 +1390,10 @@ function App() {
         </div>
 
         <div className="joint-system-strip" aria-label="两种关节的共同设计特点">
-          <div><small>SHARED CORE</small><b>Cycloidal Disk</b><span>摆线盘把电机高速旋转转换成高减速输出。</span></div>
-          <div><small>PRINTABLE BODY</small><b>Housing Variants</b><span>壳体按打印机和装配工艺拆分，便于低成本复现。</span></div>
-          <div><small>MODEL TO BUILD</small><b>CAD + PRINT FILES</b><span>CAD 与打印文件配套，形成从模型到制造的闭环。</span></div>
-          <div><small>IOT ENDPOINT</small><b>Sense · Act · Report</b><span>关节形成“采集状态—执行指令—回传结果”的最小物联网闭环。</span></div>
+          <div><small>摆线减速</small><b>Cycloidal Disk</b><span>摆线盘把电机高速旋转转换成高减速输出。</span></div>
+          <div><small>模块化壳体</small><b>Housing Variants</b><span>壳体按打印机和装配工艺拆分，便于低成本复现。</span></div>
+          <div><small>设计与制造</small><b>CAD + PRINT FILES</b><span>CAD 与打印文件配套，形成从模型到制造的闭环。</span></div>
+          <div><small>关节节点</small><b>Sense · Act · Report</b><span>关节形成“采集状态—执行指令—回传结果”的最小物联网闭环。</span></div>
         </div>
       </section>
 
@@ -1401,7 +1401,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>EDGE NODE</span><i /><b>DEVICE NETWORK / 04</b></div>
         <div className="section-index" aria-hidden="true">04</div>
         <div className="section-copy">
-          <div className="eyebrow"><span /> PHYSICAL EDGE NETWORK · 04</div>
+          <div className="eyebrow"><span /> 硬件连接</div>
           <h2>硬件不只被装配，<br /><em>还要被连接。</em></h2>
           <p>无刷电机、编码器、驱动板和摆线减速器组成执行节点；左右肢体经双 CAN 分流接入边缘控制器，让批量关节拥有统一的命令、反馈和故障定位路径。</p>
           <div className="hardware-tags">
@@ -1464,7 +1464,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>CLOSED LOOP</span><i /><b>IOT SERVICE / 05</b></div>
         <div className="service-system-head">
           <div>
-            <div className="eyebrow"><span /> END · EDGE · NETWORK · SERVICE · 05</div>
+            <div className="eyebrow"><span /> 物联服务</div>
             <h2>数据回得来，<br /><em>服务才真正闭环。</em></h2>
           </div>
           <p>远端下发任务，边缘控制器拆解动作，关节节点执行并回传状态，数字孪生同步呈现结果。指令、执行、反馈和诊断形成同一条可追踪的数据链。</p>
@@ -1472,10 +1472,10 @@ function App() {
 
         <div className="service-system-layout" aria-label="物联网智慧服务系统架构">
           <div className="service-orbit-map">
-            <div className="service-map-kicker"><i /> LIVE SYSTEM TOPOLOGY <b>DATA FLOW ACTIVE</b></div>
+            <div className="service-map-kicker"><i /> 系统连接示意 <b>控制与反馈</b></div>
             <div className="service-core">
               <small>DIGITAL TWIN</small>
-              <b>3S Service Hub</b>
+              <b>3S 服务中枢</b>
               <span>状态可视 · 远程控制 · 运维诊断</span>
             </div>
             <span className="service-node node-sense"><i />设备感知<small>ENCODER · IMU · JOINT STATE</small></span>
@@ -1526,7 +1526,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>DATA PIPELINE</span><i /><b>EDGE TO SERVICE / 06</b></div>
         <div className="software-head">
           <div>
-            <div className="eyebrow"><span /> IOT DATA PIPELINE · 06</div>
+            <div className="eyebrow"><span /> 数据与行动</div>
             <h2>一条数据链，<br />贯穿感知与服务。</h2>
           </div>
           <p>关节传感数据经 CAN 汇入边缘控制，策略在设备侧实时运行；UDP 承载远程任务与遥操作目标，数字孪生同步动作与设备状态。仿真训练则为边缘策略提供可部署的智能能力。</p>
@@ -1553,7 +1553,7 @@ function App() {
         <div className="code-signal-row" aria-label="源码亮点">
           <article>
             <small>FIELD DEVICES</small>
-            <strong>22 JOINT NODES</strong>
+            <strong>22 个关节节点</strong>
             <p>统一关节顺序把目标位置与测量状态映射到同一套设备模型。</p>
           </article>
           <article>
@@ -1591,7 +1591,7 @@ function App() {
           <div className="teleop-shade" />
           <div className="teleop-feature-label"><i /> 03 / DUAL-ARM TELEOPERATION</div>
           <div className="teleop-feature-copy">
-            <small>这个项目真正有辨识度的软件能力</small>
+            <small>遥操作</small>
             <h3>两只手柄，<br />直接映射两只机械臂。</h3>
             <p>控制器提供六自由度目标位姿；机器人端以 Pinocchio 建模、Pink 求解微分逆运动学，在稳定基座的同时追踪双臂末端。</p>
           </div>
@@ -1609,7 +1609,7 @@ function App() {
         <div className="section-energy-label" aria-hidden="true"><span>REAL MANUFACTURING</span><i /><b>BUILD FLOOR / 07</b></div>
         <div className="real-builds-head">
           <div>
-            <div className="eyebrow"><span /> FROM PARTS TO HUMANOID · 07</div>
+            <div className="eyebrow"><span /> 从模型到实物</div>
             <h2>模型之后，<br /><em>看实物怎样长出来。</em></h2>
           </div>
           <p>实物照片按制造路径重排：先看单个关节原型，再看电机入壳、轴承嵌件、驱动板、批量调试，最后进入全身装配。这样比单纯堆图更像一条完整技术报告证据链。</p>
@@ -1652,9 +1652,9 @@ function App() {
       </section>
 
       <footer>
-        <span>3S HUMANOID SERVICE SYSTEM</span>
+        <span>3S 人形物联网服务系统</span>
         <div className="footer-line"><i /></div>
-        <span>DESIGN · CONNECT · SERVICE</span>
+        <span>感知 · 连接 · 行动</span>
       </footer>
     </main>
   )
